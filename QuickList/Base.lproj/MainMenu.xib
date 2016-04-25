@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6233" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6233"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -11,12 +13,20 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="">
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="imageLabel" destination="Oc9-8c-Ixz" id="crp-Of-uB8"/>
+                <outlet property="imageView" destination="49B-JU-vCN" id="nEe-3f-9Yf"/>
+                <outlet property="pageController" destination="qUZ-gb-KTf" id="0WV-bq-gFX"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <pagecontroller id="qUZ-gb-KTf">
+            <connections>
+                <outlet property="view" destination="49B-JU-vCN" id="NtN-Ts-XyW"/>
+            </connections>
+        </pagecontroller>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="QuickList" id="1Xt-HY-uBw">
@@ -670,10 +680,57 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kmh-Er-Gx7">
+                        <rect key="frame" x="339" y="13" width="72" height="32"/>
+                        <buttonCell key="cell" type="push" title="next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Rnq-LQ-toD">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="navigateForward:" target="qUZ-gb-KTf" id="n18-ug-TNh"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uVU-Vn-6ZG">
+                        <rect key="frame" x="69" y="13" width="67" height="32"/>
+                        <buttonCell key="cell" type="push" title="prev" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DDs-0F-vW4">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="navigateBack:" target="qUZ-gb-KTf" id="Wsl-AQ-dui"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oc9-8c-Ixz">
+                        <rect key="frame" x="219" y="20" width="37" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="LMH-7B-Itx">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="49B-JU-vCN">
+                        <rect key="frame" x="127" y="121" width="226" height="222"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="Hna-Mh-b8o"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Oc9-8c-Ixz" secondAttribute="bottom" constant="20" id="IrI-YY-gvz"/>
+                    <constraint firstAttribute="bottom" secondItem="uVU-Vn-6ZG" secondAttribute="bottom" constant="20" id="Mxk-zs-jAr"/>
+                    <constraint firstAttribute="trailing" secondItem="49B-JU-vCN" secondAttribute="trailing" constant="130" id="Syu-05-UE4"/>
+                    <constraint firstItem="49B-JU-vCN" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="130" id="TNo-ty-gxm"/>
+                    <constraint firstItem="49B-JU-vCN" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" id="Zmy-8D-ywE"/>
+                    <constraint firstItem="Oc9-8c-Ixz" firstAttribute="leading" secondItem="uVU-Vn-6ZG" secondAttribute="trailing" constant="91" id="b1Q-8k-AHD"/>
+                    <constraint firstItem="Kmh-Er-Gx7" firstAttribute="leading" secondItem="Oc9-8c-Ixz" secondAttribute="trailing" constant="91" id="eXJ-L9-HrE"/>
+                    <constraint firstItem="49B-JU-vCN" firstAttribute="height" secondItem="EiT-Mj-1SZ" secondAttribute="height" multiplier="0.6" id="l4I-P4-vF4"/>
+                    <constraint firstItem="uVU-Vn-6ZG" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="75" id="oUM-YP-Fka"/>
+                    <constraint firstAttribute="trailing" secondItem="Kmh-Er-Gx7" secondAttribute="trailing" constant="75" id="yN6-n2-s8y"/>
+                    <constraint firstAttribute="bottom" secondItem="Kmh-Er-Gx7" secondAttribute="bottom" constant="20" id="yzW-b1-PIV"/>
+                </constraints>
             </view>
         </window>
     </objects>

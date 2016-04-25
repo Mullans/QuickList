@@ -18,11 +18,47 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
-}
+    _imageArray = @[[NSImage imageNamed:@"beard"],[NSImage imageNamed:@"grandfather"],[NSImage imageNamed:@"meh"]];
+    
+    [_pageController setDelegate:self];
+    [_pageController setArrangedObjects:_imageArray];
+    [_pageController setTransitionStyle:NSPageControllerTransitionStyleHorizontalStrip];
+    NSString *info = [NSString stringWithFormat:@"Image %ld/%ld", ([_pageController selectedIndex]+1), [_imageArray count]];
+    [_imageLabel setStringValue:info];}
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+}
+
+- (void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object {
+    /* When image is changed, update info label's text */
+    NSString *info = [NSString stringWithFormat:@"Image %ld/%ld", ([_pageController selectedIndex]+1), [_imageArray count]];
+    [_imageLabel setStringValue:info];
+}
+
+- (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
+    /* Returns object's array index as identiefier */
+    NSString *identifier = [[NSNumber numberWithInteger:[_imageArray indexOfObject:object]] stringValue];
+    return identifier;
+}
+
+- (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
+    /* Create new view controller and image view */
+    NSViewController *vController = [NSViewController new];
+    NSImageView *iView = [[NSImageView alloc] initWithFrame:[_imageView frame]];
+    
+    /* Get image from image array using identifier and set image to view */
+    [iView setImage:(NSImage *)[_imageArray objectAtIndex:[identifier integerValue]]];
+    /* Set image view's frame style to none */
+    [iView setImageFrameStyle:NSImageFrameNone];
+    
+    /* Add image view to view controller and return view controller */
+    [vController setView:iView];
+    return vController;
+}
+
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
+    return true;
 }
 
 #pragma mark - Core Data stack
