@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D6FDEFF1CCDDC06000D6A12 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6FDEFE1CCDDC06000D6A12 /* HeaderView.m */; };
 		3D81D7ED1CCDB0B8001AB135 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */; };
 		3D81D7F01CCDB0B8001AB135 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D7EF1CCDB0B8001AB135 /* main.m */; };
 		3D81D7F31CCDB0B8001AB135 /* QuickList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D7F11CCDB0B8001AB135 /* QuickList.xcdatamodeld */; };
@@ -15,6 +16,7 @@
 		3D81D8031CCDB0B8001AB135 /* QuickListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D8021CCDB0B8001AB135 /* QuickListTests.m */; };
 		3D81D80E1CCDB0B8001AB135 /* QuickListUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D80D1CCDB0B8001AB135 /* QuickListUITests.m */; };
 		3DFA12E91CCDBB8800B8E25C /* DataMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA12E81CCDBB8800B8E25C /* DataMaster.m */; };
+		3DFA12EC1CCDCE0A00B8E25C /* CustomTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA12EB1CCDCE0A00B8E25C /* CustomTableCellView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D6FDEFD1CCDDC06000D6A12 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
+		3D6FDEFE1CCDDC06000D6A12 /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
 		3D81D7E81CCDB0B8001AB135 /* QuickList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D81D7EB1CCDB0B8001AB135 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -51,6 +55,8 @@
 		3D81D80F1CCDB0B8001AB135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DFA12E71CCDBB8800B8E25C /* DataMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMaster.h; sourceTree = "<group>"; };
 		3DFA12E81CCDBB8800B8E25C /* DataMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMaster.m; sourceTree = "<group>"; };
+		3DFA12EA1CCDCE0A00B8E25C /* CustomTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableCellView.h; sourceTree = "<group>"; };
+		3DFA12EB1CCDCE0A00B8E25C /* CustomTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableCellView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +109,14 @@
 			children = (
 				3D81D7EB1CCDB0B8001AB135 /* AppDelegate.h */,
 				3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */,
+				3DFA12EA1CCDCE0A00B8E25C /* CustomTableCellView.h */,
+				3DFA12EB1CCDCE0A00B8E25C /* CustomTableCellView.m */,
 				3DFA12E71CCDBB8800B8E25C /* DataMaster.h */,
 				3DFA12E81CCDBB8800B8E25C /* DataMaster.m */,
 				3D81D7F41CCDB0B8001AB135 /* Assets.xcassets */,
 				3D81D7F61CCDB0B8001AB135 /* MainMenu.xib */,
+				3D6FDEFD1CCDDC06000D6A12 /* HeaderView.h */,
+				3D6FDEFE1CCDDC06000D6A12 /* HeaderView.m */,
 				3D81D7F91CCDB0B8001AB135 /* Info.plist */,
 				3D81D7F11CCDB0B8001AB135 /* QuickList.xcdatamodeld */,
 				3D81D7EE1CCDB0B8001AB135 /* Supporting Files */,
@@ -270,9 +280,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D81D7F01CCDB0B8001AB135 /* main.m in Sources */,
+				3D6FDEFF1CCDDC06000D6A12 /* HeaderView.m in Sources */,
 				3D81D7ED1CCDB0B8001AB135 /* AppDelegate.m in Sources */,
 				3D81D7F31CCDB0B8001AB135 /* QuickList.xcdatamodeld in Sources */,
 				3DFA12E91CCDBB8800B8E25C /* DataMaster.m in Sources */,
+				3DFA12EC1CCDCE0A00B8E25C /* CustomTableCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

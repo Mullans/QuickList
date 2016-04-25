@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(NSArray*)getTableAtIndex:(NSInteger)index;
 -(NSArray*)getDataForTable:(NSTableView*)table;
+
 NS_ASSUME_NONNULL_END
 
 /**

@@ -20,7 +20,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     dataMaster = [[DataMaster alloc]init];
     tables = [[NSMutableArray alloc]initWithCapacity:5];
-    [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@1,@2,@3,@4]];
+    [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@1,@2,@3,@4,@5,@6,@7,@8,@9]];
     [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@11,@12,@13,@14]];
     [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@21,@22,@23,@24]];
 
@@ -30,19 +30,15 @@
     [_pageController setDelegate:self];
     [_pageController setArrangedObjects:_tableArray];
     [_pageController setTransitionStyle:NSPageControllerTransitionStyleHorizontalStrip];
-    NSString *info = [NSString stringWithFormat:@"Image %ld/%ld", ([_pageController selectedIndex]+1), [_tableArray count]];
-    [_imageLabel setStringValue:info];}
-
+}
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 }
 
 #pragma mark - NSPageControllerDelegate
-- (void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object {
-    /* When image is changed, update info label's text */
-    NSString *info = [NSString stringWithFormat:@"Image %ld/%ld", ([_pageController selectedIndex]+1), [_tableArray count]];
-    [_imageLabel setStringValue:info];
-}
+//- (void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object {
+//    /* When image is changed, update info label's text */
+//}
 
 - (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
     /* Returns object's array index as identiefier */
@@ -65,13 +61,16 @@
 
 #pragma mark - NSTableViewDelegate/NSTableViewDataSource
 -(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row{
-    return 25;
+    return 40;
 }
 -(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
-    NSTableCellView *result = [tableView makeViewWithIdentifier:@"TableCell" owner:self];
+    CustomTableCellView *result = [tableView makeViewWithIdentifier:@"TableCell" owner:self];
     if(result==nil){
-        result = [[NSTableCellView alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width, [self tableView:tableView heightOfRow:row])];
+        result = [[CustomTableCellView alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width, [self tableView:tableView heightOfRow:row])];
     }
+    CGFloat numberOfRows = [[NSNumber numberWithInt: tableView.numberOfRows] floatValue];
+    CGFloat colorFloat = (0.8)*1+(0.2)*(row/numberOfRows);
+    result.borderColor = [NSColor colorWithRed:0.7 green:1-colorFloat blue:colorFloat alpha:1];
     NSTextField *cellTF = [[NSTextField alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width, result.bounds.size.height)];
     [cellTF setAutoresizingMask:NSViewWidthSizable];
     [result addSubview:cellTF];
@@ -80,6 +79,17 @@
     [cellTF setEditable:NO];
     [cellTF setDrawsBackground:NO];
     result.textField.stringValue = [dataMaster getDataForTable:tableView][row];
+    NSFontManager *fontManager = [NSFontManager sharedFontManager];
+    NSFont *cellFont = [fontManager fontWithFamily:@"Verdana"
+                                              traits:NSBoldFontMask
+                                              weight:0
+                                                size:20];
+    NSButton *newButton = [[NSButton alloc]initWithFrame:CGRectMake(result.frame.size.width-25, result.frame.size.height-30, 20, 20)];
+    [newButton setTarget:self];
+    [newButton setAction:@selector(tableButtonPressed:)];
+    [newButton setIdentifier:[[NSNumber numberWithInteger:row] stringValue]];
+    [result addSubview:newButton];
+    result.textField.font = cellFont;
     return result;
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
@@ -87,6 +97,27 @@
         return 0;
     }
     return [[dataMaster getDataForTable:tableView] count];
+}
+-(void)tableViewSelectionIsChanging:(NSNotification *)notification{
+    if([(NSTableView*)notification.object selectedRowIndexes].count<=1){
+        [_rightHeaderButton setImage:[NSImage imageNamed:@"NSAddTemplate"]];
+    }else{
+        [_rightHeaderButton setImage:[NSImage imageNamed:@"NSFolder"]];
+        groupButton = TRUE;
+    }
+}
+#pragma mark - Table Buttons
+-(void)tableButtonPressed:(id)sender{
+    NSButton* senderButton = (NSButton*)sender;
+    NSLog(@"%@",senderButton.identifier);
+    [((NSTableView*)[dataMaster getTableAtIndex:_pageController.selectedIndex][1]) deselectAll:nil];
+    if(groupButton){
+        [_rightHeaderButton setImage:[NSImage imageNamed:@"NSAddTemplate"]];
+    }
+    [_pageController navigateForward:nil];
+}
+- (IBAction)backButtonPressed:(id)sender {
+    [_pageController navigateBack:nil];
 }
 
 #pragma mark - Core Data stack
@@ -238,5 +269,6 @@
 
     return NSTerminateNow;
 }
+
 
 @end

@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "DataMaster.h"
+#import "CustomTableCellView.h"
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSPageControllerDelegate,NSTableViewDelegate,NSTableViewDataSource>{
     NSMutableArray* tables;
     DataMaster* dataMaster;
+    BOOL groupButton;
 }
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -19,10 +21,11 @@
 
 @property (weak) IBOutlet NSPageController *pageController;
 @property (weak) IBOutlet NSView *pagedView;
-@property (weak) IBOutlet NSTextField *imageLabel;
 
 @property (nonatomic) NSArray *tableArray;
+@property (weak) IBOutlet NSButton *rightHeaderButton;
 
+- (IBAction)backButtonPressed:(id)sender;
 
 @end
 
