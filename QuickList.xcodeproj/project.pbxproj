@@ -14,7 +14,7 @@
 		3D81D7F81CCDB0B8001AB135 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D81D7F61CCDB0B8001AB135 /* MainMenu.xib */; };
 		3D81D8031CCDB0B8001AB135 /* QuickListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D8021CCDB0B8001AB135 /* QuickListTests.m */; };
 		3D81D80E1CCDB0B8001AB135 /* QuickListUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D80D1CCDB0B8001AB135 /* QuickListUITests.m */; };
-		3D81D81D1CCDB4B8001AB135 /* ToolBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D81C1CCDB4B8001AB135 /* ToolBox.m */; };
+		3DFA12E91CCDBB8800B8E25C /* DataMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA12E81CCDBB8800B8E25C /* DataMaster.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +49,8 @@
 		3D81D8091CCDB0B8001AB135 /* QuickListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D81D80D1CCDB0B8001AB135 /* QuickListUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickListUITests.m; sourceTree = "<group>"; };
 		3D81D80F1CCDB0B8001AB135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D81D81B1CCDB4B8001AB135 /* ToolBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolBox.h; sourceTree = "<group>"; };
-		3D81D81C1CCDB4B8001AB135 /* ToolBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolBox.m; sourceTree = "<group>"; };
+		3DFA12E71CCDBB8800B8E25C /* DataMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMaster.h; sourceTree = "<group>"; };
+		3DFA12E81CCDBB8800B8E25C /* DataMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMaster.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +103,8 @@
 			children = (
 				3D81D7EB1CCDB0B8001AB135 /* AppDelegate.h */,
 				3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */,
-				3D81D81B1CCDB4B8001AB135 /* ToolBox.h */,
-				3D81D81C1CCDB4B8001AB135 /* ToolBox.m */,
+				3DFA12E71CCDBB8800B8E25C /* DataMaster.h */,
+				3DFA12E81CCDBB8800B8E25C /* DataMaster.m */,
 				3D81D7F41CCDB0B8001AB135 /* Assets.xcassets */,
 				3D81D7F61CCDB0B8001AB135 /* MainMenu.xib */,
 				3D81D7F91CCDB0B8001AB135 /* Info.plist */,
@@ -272,7 +272,7 @@
 				3D81D7F01CCDB0B8001AB135 /* main.m in Sources */,
 				3D81D7ED1CCDB0B8001AB135 /* AppDelegate.m in Sources */,
 				3D81D7F31CCDB0B8001AB135 /* QuickList.xcdatamodeld in Sources */,
-				3D81D81D1CCDB4B8001AB135 /* ToolBox.m in Sources */,
+				3DFA12E91CCDBB8800B8E25C /* DataMaster.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +493,7 @@
 				3D81D8141CCDB0B8001AB135 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D81D8151CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "QuickListTests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +502,7 @@
 				3D81D8171CCDB0B8001AB135 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D81D8181CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "QuickListUITests" */ = {
 			isa = XCConfigurationList;
@@ -509,6 +511,7 @@
 				3D81D81A1CCDB0B8001AB135 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

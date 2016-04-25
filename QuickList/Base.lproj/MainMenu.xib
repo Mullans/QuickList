@@ -16,8 +16,8 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="imageLabel" destination="Oc9-8c-Ixz" id="crp-Of-uB8"/>
-                <outlet property="imageView" destination="6p7-gI-WSw" id="dnS-d2-yD0"/>
                 <outlet property="pageController" destination="qUZ-gb-KTf" id="0WV-bq-gFX"/>
+                <outlet property="pagedView" destination="6p7-gI-WSw" id="fV3-Iv-CHp"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>

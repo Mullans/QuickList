@@ -18,47 +18,75 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    _imageArray = @[[NSImage imageNamed:@"beard"],[NSImage imageNamed:@"grandfather"],[NSImage imageNamed:@"meh"]];
+    dataMaster = [[DataMaster alloc]init];
+    tables = [[NSMutableArray alloc]initWithCapacity:5];
+    [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@1,@2,@3,@4]];
+    [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@11,@12,@13,@14]];
+    [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@21,@22,@23,@24]];
+
+    
+    _tableArray = @[@0,@1,@2];
     
     [_pageController setDelegate:self];
-    [_pageController setArrangedObjects:_imageArray];
+    [_pageController setArrangedObjects:_tableArray];
     [_pageController setTransitionStyle:NSPageControllerTransitionStyleHorizontalStrip];
-    NSString *info = [NSString stringWithFormat:@"Image %ld/%ld", ([_pageController selectedIndex]+1), [_imageArray count]];
+    NSString *info = [NSString stringWithFormat:@"Image %ld/%ld", ([_pageController selectedIndex]+1), [_tableArray count]];
     [_imageLabel setStringValue:info];}
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 }
 
+#pragma mark - NSPageControllerDelegate
 - (void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object {
     /* When image is changed, update info label's text */
-    NSString *info = [NSString stringWithFormat:@"Image %ld/%ld", ([_pageController selectedIndex]+1), [_imageArray count]];
+    NSString *info = [NSString stringWithFormat:@"Image %ld/%ld", ([_pageController selectedIndex]+1), [_tableArray count]];
     [_imageLabel setStringValue:info];
 }
 
 - (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
     /* Returns object's array index as identiefier */
-    NSString *identifier = [[NSNumber numberWithInteger:[_imageArray indexOfObject:object]] stringValue];
+    NSString *identifier = [[NSNumber numberWithInteger:[_tableArray indexOfObject:object]] stringValue];
     return identifier;
 }
 
 - (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
-    /* Create new view controller and image view */
     NSViewController *vController = [NSViewController new];
-    NSImageView *iView = [[NSImageView alloc] initWithFrame:[_imageView frame]];
     
-    /* Get image from image array using identifier and set image to view */
-    [iView setImage:(NSImage *)[_imageArray objectAtIndex:[identifier integerValue]]];
-    /* Set image view's frame style to none */
-    [iView setImageFrameStyle:NSImageFrameNone];
+    NSArray* data = [dataMaster getTableAtIndex:[identifier integerValue]];
     
-    /* Add image view to view controller and return view controller */
-    [vController setView:iView];
+    [vController setView:data[0]];
     return vController;
 }
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
     return true;
+}
+
+#pragma mark - NSTableViewDelegate/NSTableViewDataSource
+-(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row{
+    return 25;
+}
+-(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
+    NSTableCellView *result = [tableView makeViewWithIdentifier:@"TableCell" owner:self];
+    if(result==nil){
+        result = [[NSTableCellView alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width, [self tableView:tableView heightOfRow:row])];
+    }
+    NSTextField *cellTF = [[NSTextField alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width, result.bounds.size.height)];
+    [cellTF setAutoresizingMask:NSViewWidthSizable];
+    [result addSubview:cellTF];
+    result.textField = cellTF;
+    [cellTF setBordered:NO];
+    [cellTF setEditable:NO];
+    [cellTF setDrawsBackground:NO];
+    result.textField.stringValue = [dataMaster getDataForTable:tableView][row];
+    return result;
+}
+-(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
+    if(dataMaster.data.count==0){
+        return 0;
+    }
+    return [[dataMaster getDataForTable:tableView] count];
 }
 
 #pragma mark - Core Data stack

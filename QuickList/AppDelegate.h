@@ -7,18 +7,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ToolBox.h"
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSPageControllerDelegate>
+#import "DataMaster.h"
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSPageControllerDelegate,NSTableViewDelegate,NSTableViewDataSource>{
+    NSMutableArray* tables;
+    DataMaster* dataMaster;
+}
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (weak) IBOutlet NSPageController *pageController;
-@property (weak) IBOutlet NSView *imageView;
+@property (weak) IBOutlet NSView *pagedView;
 @property (weak) IBOutlet NSTextField *imageLabel;
 
-@property (nonatomic) NSArray *imageArray;
+@property (nonatomic) NSArray *tableArray;
 
 
 @end
