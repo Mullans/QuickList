@@ -16,6 +16,7 @@
     [column1 setWidth:tableView.frame.size.width];
     [tableView addTableColumn:column1];
     [tableView setHeaderView:nil];
+    [tableContainer setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
     [tableContainer setDocumentView:tableView];
     [tableContainer setHasVerticalScroller:YES];
     [tableContainer setHasHorizontalScroller:NO];

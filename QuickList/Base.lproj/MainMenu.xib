@@ -679,14 +679,14 @@
         <window title="QuickList" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
+            <rect key="contentRect" x="335" y="390" width="507" height="376"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
+                <rect key="frame" x="0.0" y="0.0" width="507" height="376"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kmh-Er-Gx7">
-                        <rect key="frame" x="339" y="13" width="72" height="32"/>
+                        <rect key="frame" x="339" y="13" width="99" height="32"/>
                         <buttonCell key="cell" type="push" title="next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Rnq-LQ-toD">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -714,23 +714,24 @@
                         </textFieldCell>
                     </textField>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="6p7-gI-WSw">
-                        <rect key="frame" x="130" y="124" width="220" height="216"/>
+                        <rect key="frame" x="0.0" y="75" width="507" height="301"/>
                     </customView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="Oc9-8c-Ixz" secondAttribute="bottom" constant="20" id="IrI-YY-gvz"/>
                     <constraint firstAttribute="bottom" secondItem="uVU-Vn-6ZG" secondAttribute="bottom" constant="20" id="Mxk-zs-jAr"/>
-                    <constraint firstItem="6p7-gI-WSw" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" id="NV3-K6-pcs"/>
-                    <constraint firstAttribute="trailing" secondItem="6p7-gI-WSw" secondAttribute="trailing" constant="130" id="ZtD-gq-4OI"/>
+                    <constraint firstItem="6p7-gI-WSw" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="NV3-K6-pcs"/>
+                    <constraint firstAttribute="trailing" secondItem="6p7-gI-WSw" secondAttribute="trailing" id="ZtD-gq-4OI"/>
                     <constraint firstItem="Oc9-8c-Ixz" firstAttribute="leading" secondItem="uVU-Vn-6ZG" secondAttribute="trailing" constant="91" id="b1Q-8k-AHD"/>
                     <constraint firstItem="Kmh-Er-Gx7" firstAttribute="leading" secondItem="Oc9-8c-Ixz" secondAttribute="trailing" constant="91" id="eXJ-L9-HrE"/>
-                    <constraint firstItem="6p7-gI-WSw" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="130" id="emo-b2-Tig"/>
+                    <constraint firstItem="6p7-gI-WSw" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="emo-b2-Tig"/>
                     <constraint firstItem="uVU-Vn-6ZG" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="75" id="oUM-YP-Fka"/>
-                    <constraint firstItem="6p7-gI-WSw" firstAttribute="height" secondItem="EiT-Mj-1SZ" secondAttribute="height" multiplier="0.6" id="sFH-ZX-m7o"/>
+                    <constraint firstItem="6p7-gI-WSw" firstAttribute="height" secondItem="EiT-Mj-1SZ" secondAttribute="height" multiplier="0.8" id="sFH-ZX-m7o"/>
                     <constraint firstAttribute="trailing" secondItem="Kmh-Er-Gx7" secondAttribute="trailing" constant="75" id="yN6-n2-s8y"/>
                     <constraint firstAttribute="bottom" secondItem="Kmh-Er-Gx7" secondAttribute="bottom" constant="20" id="yzW-b1-PIV"/>
                 </constraints>
             </view>
+            <point key="canvasLocation" x="320.5" y="405"/>
         </window>
     </objects>
 </document>
