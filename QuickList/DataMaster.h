@@ -8,14 +8,28 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
+#import "FolderObject.h"
 NS_ASSUME_NONNULL_BEGIN
+typedef NS_ENUM(NSInteger, FOFolderType) {
+    FORoot,
+    FODefault,
+    FOHTML,
+    FOLocalURL,
+    FOTextFile,
+    FOImage,
+    FOPDF
+};
+
 @interface DataMaster : NSObject{
     NSMutableArray* scrollViews;
     NSMutableArray* tables;
+    NSManagedObjectContext* context;
+    FolderObject* currentFolder;
 }
 
 @property (nonatomic,readonly) NSMutableArray* data;
 @property (nonatomic,readonly) NSInteger tableCount;
+@property (nonatomic, readonly) NSInteger currentFolderSize;
 
 -(void)addNewTable:(NSTableView*)table scroll:(NSScrollView*)scrollView;
 -(void)removeTableAtIndex:(NSInteger)index;
@@ -55,5 +69,15 @@ NS_ASSUME_NONNULL_END
  */
 -(nonnull NSArray*)makeTableForView:(nonnull NSView*)view dataSource:(nullable id<NSTableViewDataSource>)dataSource delegate:(nullable id<NSTableViewDelegate>)delegate withData:(nonnull NSArray*)data;
 
+/**
+ *  Initialize the DataMaster with a reference to the app's CoreData
+ *
+ *  @param managedContext NSManagedObjectContext from AppDelegate
+ *
+ *  @return new instance of DataMaster with context
+ */
+-(nonnull instancetype)initWithContext:(nonnull NSManagedObjectContext*)managedContext;
 
+-(nonnull FolderObject*)openFolder:(nonnull FolderObject*)folder;
+-(nonnull FolderObject*)newFolderNamed:(nonnull NSString*)name inFolder:(nonnull FolderObject*)parentFolder;
 @end

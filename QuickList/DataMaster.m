@@ -69,5 +69,59 @@
         return nil;
     }
 }
-
+#pragma mark - CoreData Methods
+-(instancetype)initWithContext:(NSManagedObjectContext*)managedContext{
+    tables = [[NSMutableArray alloc]initWithCapacity:5];
+    scrollViews = [[NSMutableArray alloc]initWithCapacity:5];
+    _data = [[NSMutableArray alloc]initWithCapacity:5];
+    context = managedContext;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+    NSEntityDescription* entity = [NSEntityDescription entityForName:@"FolderObject" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type=%lui",FORoot];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    if(fetchedObjects==nil){
+        NSLog(@"Error Loading DataMaster");
+    }
+    if(fetchedObjects.count==0){
+        currentFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];
+        currentFolder.type = FORoot;
+        currentFolder.parentFolder = nil;
+    }else if(fetchedObjects.count>1){
+        NSLog(@"Error: Multiple RootFolders found");
+        currentFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];
+        currentFolder.type = FORoot;
+        currentFolder.parentFolder = nil;
+        for(FolderObject* folder in fetchedObjects){
+            [currentFolder addSubfoldersObject:folder];
+            folder.type = FODefault;
+            folder.parentFolder = currentFolder;
+            folder.name = @"Untitled Folder";
+        }
+    }else{
+        currentFolder = [fetchedObjects lastObject];
+    }
+    
+    return self;
+}
+-(FolderObject*)openFolder:(FolderObject *)folder{
+    if([currentFolder doesContain:folder]){
+        currentFolder = folder;
+        return currentFolder;
+    }
+    return nil;
+}
+-(FolderObject*)newFolderNamed:(NSString*)name inFolder:(FolderObject*)parentFolder{
+    FolderObject* newFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];
+    newFolder.type = FODefault;
+    newFolder.parentFolder = parentFolder;
+    [parentFolder addSubfoldersObject:newFolder];
+    return newFolder;
+}
+-(NSInteger)currentFolderSize{
+    //should be 0 for anything other than FORoot and FODefault
+    return [currentFolder.subfolders count];
+}
 @end
