@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "ToolBox.h"
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSPageControllerDelegate>
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -15,7 +15,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (weak) IBOutlet NSPageController *pageController;
-@property (weak) IBOutlet NSImageView *imageView;
+@property (weak) IBOutlet NSView *imageView;
 @property (weak) IBOutlet NSTextField *imageLabel;
 
 @property (nonatomic) NSArray *imageArray;

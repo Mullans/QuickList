@@ -16,7 +16,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="imageLabel" destination="Oc9-8c-Ixz" id="crp-Of-uB8"/>
-                <outlet property="imageView" destination="49B-JU-vCN" id="nEe-3f-9Yf"/>
+                <outlet property="imageView" destination="6p7-gI-WSw" id="dnS-d2-yD0"/>
                 <outlet property="pageController" destination="qUZ-gb-KTf" id="0WV-bq-gFX"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -24,7 +24,7 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <pagecontroller id="qUZ-gb-KTf">
             <connections>
-                <outlet property="view" destination="49B-JU-vCN" id="NtN-Ts-XyW"/>
+                <outlet property="view" destination="6p7-gI-WSw" id="etd-DM-rIu"/>
             </connections>
         </pagecontroller>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
@@ -713,21 +713,20 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="49B-JU-vCN">
-                        <rect key="frame" x="127" y="121" width="226" height="222"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="Hna-Mh-b8o"/>
-                    </imageView>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="6p7-gI-WSw">
+                        <rect key="frame" x="130" y="124" width="220" height="216"/>
+                    </customView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="Oc9-8c-Ixz" secondAttribute="bottom" constant="20" id="IrI-YY-gvz"/>
                     <constraint firstAttribute="bottom" secondItem="uVU-Vn-6ZG" secondAttribute="bottom" constant="20" id="Mxk-zs-jAr"/>
-                    <constraint firstAttribute="trailing" secondItem="49B-JU-vCN" secondAttribute="trailing" constant="130" id="Syu-05-UE4"/>
-                    <constraint firstItem="49B-JU-vCN" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="130" id="TNo-ty-gxm"/>
-                    <constraint firstItem="49B-JU-vCN" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" id="Zmy-8D-ywE"/>
+                    <constraint firstItem="6p7-gI-WSw" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" id="NV3-K6-pcs"/>
+                    <constraint firstAttribute="trailing" secondItem="6p7-gI-WSw" secondAttribute="trailing" constant="130" id="ZtD-gq-4OI"/>
                     <constraint firstItem="Oc9-8c-Ixz" firstAttribute="leading" secondItem="uVU-Vn-6ZG" secondAttribute="trailing" constant="91" id="b1Q-8k-AHD"/>
                     <constraint firstItem="Kmh-Er-Gx7" firstAttribute="leading" secondItem="Oc9-8c-Ixz" secondAttribute="trailing" constant="91" id="eXJ-L9-HrE"/>
-                    <constraint firstItem="49B-JU-vCN" firstAttribute="height" secondItem="EiT-Mj-1SZ" secondAttribute="height" multiplier="0.6" id="l4I-P4-vF4"/>
+                    <constraint firstItem="6p7-gI-WSw" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="130" id="emo-b2-Tig"/>
                     <constraint firstItem="uVU-Vn-6ZG" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="75" id="oUM-YP-Fka"/>
+                    <constraint firstItem="6p7-gI-WSw" firstAttribute="height" secondItem="EiT-Mj-1SZ" secondAttribute="height" multiplier="0.6" id="sFH-ZX-m7o"/>
                     <constraint firstAttribute="trailing" secondItem="Kmh-Er-Gx7" secondAttribute="trailing" constant="75" id="yN6-n2-s8y"/>
                     <constraint firstAttribute="bottom" secondItem="Kmh-Er-Gx7" secondAttribute="bottom" constant="20" id="yzW-b1-PIV"/>
                 </constraints>
