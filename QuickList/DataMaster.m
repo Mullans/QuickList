@@ -86,42 +86,73 @@
         NSLog(@"Error Loading DataMaster");
     }
     if(fetchedObjects.count==0){
-        currentFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];
-        currentFolder.type = FORoot;
-        currentFolder.parentFolder = nil;
+        _currentFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];
+        _currentFolder.type = FORoot;
+        _currentFolder.parentFolder = nil;
+        _currentFolder.dateAdded = [[NSDate date] timeIntervalSince1970];
+        _currentFolder.dateChanged = [[NSDate date]timeIntervalSince1970];
+        _currentFolder.importance = 0;
+        _currentFolder.name = @"RootFolder";
     }else if(fetchedObjects.count>1){
         NSLog(@"Error: Multiple RootFolders found");
-        currentFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];
-        currentFolder.type = FORoot;
-        currentFolder.parentFolder = nil;
+        _currentFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];
+        _currentFolder.type = FORoot;
+        _currentFolder.parentFolder = nil;
+        _currentFolder.name = @"RootFolder";
+        _currentFolder.dateAdded = [[NSDate date] timeIntervalSince1970];
+        _currentFolder.dateChanged = [[NSDate date]timeIntervalSince1970];
+        _currentFolder.importance = 0;
         for(FolderObject* folder in fetchedObjects){
-            [currentFolder addSubfoldersObject:folder];
+            [_currentFolder addSubfoldersObject:folder];
             folder.type = FODefault;
-            folder.parentFolder = currentFolder;
+            folder.parentFolder = _currentFolder;
             folder.name = @"Untitled Folder";
         }
     }else{
-        currentFolder = [fetchedObjects lastObject];
+        _currentFolder = [fetchedObjects lastObject];
     }
-    
     return self;
 }
 -(FolderObject*)openFolder:(FolderObject *)folder{
-    if([currentFolder doesContain:folder]){
-        currentFolder = folder;
-        return currentFolder;
+    if(folder.parentFolder == _currentFolder){
+        _currentFolder = folder;
+        return _currentFolder;
     }
     return nil;
 }
--(FolderObject*)newFolderNamed:(NSString*)name inFolder:(FolderObject*)parentFolder{
+-(FolderObject*)openParentFolder{
+    if(_currentFolder.type==FORoot){
+        return nil;
+    }else{
+        _currentFolder = _currentFolder.parentFolder;
+        return _currentFolder;
+    }
+}
+-(nonnull FolderObject*)newFolderNamed:(nonnull NSString*)name inFolder:(nullable FolderObject*)parentFolder{
+    if(parentFolder==nil){
+        parentFolder = _currentFolder;
+    }
     FolderObject* newFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];
     newFolder.type = FODefault;
+    newFolder.name = name;
+    newFolder.dateAdded = [[NSDate date] timeIntervalSince1970];
+    newFolder.dateChanged = [[NSDate date]timeIntervalSince1970];
+    newFolder.importance = 5;
     newFolder.parentFolder = parentFolder;
     [parentFolder addSubfoldersObject:newFolder];
     return newFolder;
 }
 -(NSInteger)currentFolderSize{
     //should be 0 for anything other than FORoot and FODefault
-    return [currentFolder.subfolders count];
+    return [_currentFolder.subfolders count];
+}
+-(NSArray *)currentFolderContents{
+    return [_currentFolder.subfolders allObjects];
+}
+-(NSString *)currentFolderName{
+    return _currentFolder.name;
+}
+-(void)setCurrentFolderName:(NSString *)currentFolderName{
+    _currentFolder.name = currentFolderName;
 }
 @end

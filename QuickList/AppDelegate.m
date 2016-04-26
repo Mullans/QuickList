@@ -18,45 +18,45 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    dataMaster = [[DataMaster alloc]init];
-    tables = [[NSMutableArray alloc]initWithCapacity:5];
-    [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@1,@2,@3,@4,@5,@6,@7,@8,@9]];
-    [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@11,@12,@13,@14]];
-    [dataMaster makeTableForView:_pagedView dataSource:self delegate:self withData:@[@21,@22,@23,@24]];
-
-    
-    _tableArray = @[@0,@1,@2];
-    
+    dataMaster = [[DataMaster alloc]initWithContext:self.managedObjectContext];
+//    [dataMaster newFolderNamed:@"Folder1" inFolder:nil];
+//    [dataMaster newFolderNamed:@"Folder2" inFolder:nil];
+//    [dataMaster newFolderNamed:@"Folder3" inFolder:nil];
+    currentTableContents = dataMaster.currentFolderContents;
+    currentPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
+    currentPage.folder = dataMaster.currentFolder;
+    [_pageController setArrangedObjects:@[currentPage]];
+    pages = [NSMutableArray arrayWithObject:currentPage];
     [_pageController setDelegate:self];
-    [_pageController setArrangedObjects:_tableArray];
     [_pageController setTransitionStyle:NSPageControllerTransitionStyleHorizontalStrip];
+    [_pageController navigateForwardToObject:currentPage];
+    depth = 0;
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 }
 
-#pragma mark - NSPageControllerDelegate
-//- (void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object {
-//    /* When image is changed, update info label's text */
-//}
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
+    return true;
+}
 
+#pragma mark - NSPageControllerDelegate
 - (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
-    /* Returns object's array index as identiefier */
-    NSString *identifier = [[NSNumber numberWithInteger:[_tableArray indexOfObject:object]] stringValue];
-    return identifier;
+    return [(PageObject*)object identifier];
 }
 
 - (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
     NSViewController *vController = [NSViewController new];
-    
-    NSArray* data = [dataMaster getTableAtIndex:[identifier integerValue]];
-    
-    [vController setView:data[0]];
+    currentPage = pages[depth];
+    currentPage.folder = dataMaster.currentFolder;
+    [vController setView:currentPage.scrollView];
     return vController;
 }
 
--(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
-    return true;
+-(void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object{
+    currentTableContents = dataMaster.currentFolderContents;
+    [currentPage reloadTable];
+    NSLog(@"here");
 }
 
 #pragma mark - NSTableViewDelegate/NSTableViewDataSource
@@ -68,7 +68,7 @@
     if(result==nil){
         result = [[CustomTableCellView alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width, [self tableView:tableView heightOfRow:row])];
     }
-    CGFloat numberOfRows = [[NSNumber numberWithInt: tableView.numberOfRows] floatValue];
+    CGFloat numberOfRows = [[NSNumber numberWithInteger: tableView.numberOfRows] floatValue];
     CGFloat colorFloat = (0.8)*1+(0.2)*(row/numberOfRows);
     result.borderColor = [NSColor colorWithRed:0.7 green:1-colorFloat blue:colorFloat alpha:1];
     NSTextField *cellTF = [[NSTextField alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width, result.bounds.size.height)];
@@ -78,7 +78,8 @@
     [cellTF setBordered:NO];
     [cellTF setEditable:NO];
     [cellTF setDrawsBackground:NO];
-    result.textField.stringValue = [dataMaster getDataForTable:tableView][row];
+    result.textField.stringValue = ((FolderObject*)currentTableContents[row]).name;
+    
     NSFontManager *fontManager = [NSFontManager sharedFontManager];
     NSFont *cellFont = [fontManager fontWithFamily:@"Verdana"
                                               traits:NSBoldFontMask
@@ -93,10 +94,7 @@
     return result;
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    if(dataMaster.data.count==0){
-        return 0;
-    }
-    return [[dataMaster getDataForTable:tableView] count];
+    return dataMaster.currentFolderSize;
 }
 -(void)tableViewSelectionIsChanging:(NSNotification *)notification{
     if([(NSTableView*)notification.object selectedRowIndexes].count<=1){
@@ -109,15 +107,42 @@
 #pragma mark - Table Buttons
 -(void)tableButtonPressed:(id)sender{
     NSButton* senderButton = (NSButton*)sender;
-    NSLog(@"%@",senderButton.identifier);
-    [((NSTableView*)[dataMaster getTableAtIndex:_pageController.selectedIndex][1]) deselectAll:nil];
+//    NSLog(@"%@",senderButton.identifier);
+    [currentPage deselectAll];
     if(groupButton){
         [_rightHeaderButton setImage:[NSImage imageNamed:@"NSAddTemplate"]];
     }
-    [_pageController navigateForward:nil];
+    [dataMaster openFolder:(FolderObject*)currentTableContents[[senderButton.identifier integerValue]]];
+    if(depth+1>pages.count-1){
+        //desired page isn't loaded, and nothing exists at that depth
+        currentPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
+        currentPage.folder = dataMaster.currentFolder;
+        [pages addObject:currentPage];
+    }else if([((PageObject*)pages[depth+1]).identifier isEqualToString:dataMaster.currentFolder.identifier]){
+        //desired page is already loaded
+        currentPage = pages[depth+1];
+    }else{
+        //desired page isn't loaded, and there is history
+        currentPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
+        currentPage.folder = dataMaster.currentFolder;
+        pages[depth+1] = currentPage;
+        [pages removeObjectsAfterIndex:depth+2];
+    }
+    [[_pageController animator]navigateForwardToObject:currentPage];
+//    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context){
+//        [[_pageController animator] navigateForwardToObject:currentPage];
+//    }completionHandler:^{
+//        [_pageController completeTransition];
+//    }];
+    depth+=1;
+
 }
 - (IBAction)backButtonPressed:(id)sender {
-    [_pageController navigateBack:nil];
+    if([dataMaster openParentFolder]){
+        depth--;
+        currentPage = pages[depth];
+        [_pageController navigateBack:nil];
+    }
 }
 
 #pragma mark - Core Data stack

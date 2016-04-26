@@ -9,10 +9,16 @@
 #import <Cocoa/Cocoa.h>
 #import "DataMaster.h"
 #import "CustomTableCellView.h"
+#import "PageObject.h"
+#import "NSMutableArray+Management.h"
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSPageControllerDelegate,NSTableViewDelegate,NSTableViewDataSource>{
     NSMutableArray* tables;
     DataMaster* dataMaster;
     BOOL groupButton;
+    NSArray* currentTableContents;
+    PageObject* currentPage;
+    NSInteger depth;
+    NSMutableArray* pages;
 }
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;

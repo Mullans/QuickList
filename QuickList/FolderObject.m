@@ -11,4 +11,7 @@
 @implementation FolderObject
 
 // Insert code here to add functionality to your managed object subclass
+-(NSString *)identifier{
+     return [NSString stringWithFormat:@"%@-%f",self.name,self.dateAdded];
+}
 @end

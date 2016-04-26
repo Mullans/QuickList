@@ -24,13 +24,14 @@ typedef NS_ENUM(NSInteger, FOFolderType) {
     NSMutableArray* scrollViews;
     NSMutableArray* tables;
     NSManagedObjectContext* context;
-    FolderObject* currentFolder;
 }
 
 @property (nonatomic,readonly) NSMutableArray* data;
 @property (nonatomic,readonly) NSInteger tableCount;
 @property (nonatomic, readonly) NSInteger currentFolderSize;
-
+@property (nonatomic, readonly) NSArray* currentFolderContents;
+@property (nonatomic) NSString* currentFolderName;
+@property (nonatomic, readonly) FolderObject* currentFolder;
 -(void)addNewTable:(NSTableView*)table scroll:(NSScrollView*)scrollView;
 -(void)removeTableAtIndex:(NSInteger)index;
 
@@ -79,5 +80,6 @@ NS_ASSUME_NONNULL_END
 -(nonnull instancetype)initWithContext:(nonnull NSManagedObjectContext*)managedContext;
 
 -(nonnull FolderObject*)openFolder:(nonnull FolderObject*)folder;
--(nonnull FolderObject*)newFolderNamed:(nonnull NSString*)name inFolder:(nonnull FolderObject*)parentFolder;
+-(nonnull FolderObject*)openParentFolder;
+-(nonnull FolderObject*)newFolderNamed:(nonnull NSString*)name inFolder:(nullable FolderObject*)parentFolder;
 @end

@@ -18,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int16_t type;
 @property (nullable, nonatomic, retain) NSData *data;
 @property (nullable, nonatomic, retain) NSString *name;
+@property (nonatomic) NSTimeInterval dateAdded;
+@property (nonatomic) NSTimeInterval dateChanged;
+@property (nonatomic) int16_t importance;
 @property (nullable, nonatomic, retain) NSSet<FolderObject *> *subfolders;
 @property (nullable, nonatomic, retain) FolderObject *parentFolder;
 

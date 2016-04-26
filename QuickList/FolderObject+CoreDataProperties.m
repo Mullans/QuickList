@@ -16,6 +16,9 @@
 @dynamic type;
 @dynamic data;
 @dynamic name;
+@dynamic dateAdded;
+@dynamic dateChanged;
+@dynamic importance;
 @dynamic subfolders;
 @dynamic parentFolder;
 
