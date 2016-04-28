@@ -11,12 +11,11 @@
 #import "CustomTableCellView.h"
 #import "PageObject.h"
 #import "NSMutableArray+Management.h"
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSPageControllerDelegate,NSTableViewDelegate,NSTableViewDataSource>{
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate,NSTableViewDataSource>{
     NSMutableArray* tables;
     DataMaster* dataMaster;
     BOOL groupButton;
     NSArray* currentTableContents;
-    PageObject* currentPage;
     NSInteger depth;
     NSMutableArray* pages;
 }
@@ -25,7 +24,6 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-@property (weak) IBOutlet NSPageController *pageController;
 @property (weak) IBOutlet NSView *pagedView;
 
 @property (nonatomic) NSArray *tableArray;

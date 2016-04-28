@@ -18,18 +18,17 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    // Code for testing
+    //    [dataMaster newFolderNamed:@"Folder1" inFolder:nil];
+    //    [dataMaster newFolderNamed:@"Folder2" inFolder:nil];
+    //    [dataMaster newFolderNamed:@"Folder3" inFolder:nil];
+    
     dataMaster = [[DataMaster alloc]initWithContext:self.managedObjectContext];
-//    [dataMaster newFolderNamed:@"Folder1" inFolder:nil];
-//    [dataMaster newFolderNamed:@"Folder2" inFolder:nil];
-//    [dataMaster newFolderNamed:@"Folder3" inFolder:nil];
     currentTableContents = dataMaster.currentFolderContents;
-    currentPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
-    currentPage.folder = dataMaster.currentFolder;
-    [_pageController setArrangedObjects:@[currentPage]];
-    pages = [NSMutableArray arrayWithObject:currentPage];
-    [_pageController setDelegate:self];
-    [_pageController setTransitionStyle:NSPageControllerTransitionStyleHorizontalStrip];
-    [_pageController navigateForwardToObject:currentPage];
+    PageObject* newPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
+    newPage.folder = dataMaster.currentFolder;
+    pages = [NSMutableArray arrayWithObject:newPage];
+    [_pagedView addSubview:newPage.scrollView];
     depth = 0;
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -38,25 +37,6 @@
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
     return true;
-}
-
-#pragma mark - NSPageControllerDelegate
-- (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
-    return [(PageObject*)object identifier];
-}
-
-- (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
-    NSViewController *vController = [NSViewController new];
-    currentPage = pages[depth];
-    currentPage.folder = dataMaster.currentFolder;
-    [vController setView:currentPage.scrollView];
-    return vController;
-}
-
--(void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object{
-    currentTableContents = dataMaster.currentFolderContents;
-    [currentPage reloadTable];
-    NSLog(@"here");
 }
 
 #pragma mark - NSTableViewDelegate/NSTableViewDataSource
@@ -108,40 +88,45 @@
 -(void)tableButtonPressed:(id)sender{
     NSButton* senderButton = (NSButton*)sender;
 //    NSLog(@"%@",senderButton.identifier);
-    [currentPage deselectAll];
+    [pages[depth] deselectAll];
     if(groupButton){
         [_rightHeaderButton setImage:[NSImage imageNamed:@"NSAddTemplate"]];
     }
     [dataMaster openFolder:(FolderObject*)currentTableContents[[senderButton.identifier integerValue]]];
     if(depth+1>pages.count-1){
         //desired page isn't loaded, and nothing exists at that depth
-        currentPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
-        currentPage.folder = dataMaster.currentFolder;
-        [pages addObject:currentPage];
+        PageObject* newPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
+        newPage.folder = dataMaster.currentFolder;
+        [pages addObject:newPage];
+        [newPage.scrollView setFrameOrigin:CGPointMake(_pagedView.frame.origin.x+_pagedView.frame.size.width, _pagedView.frame.origin.y)];
     }else if([((PageObject*)pages[depth+1]).identifier isEqualToString:dataMaster.currentFolder.identifier]){
         //desired page is already loaded
-        currentPage = pages[depth+1];
     }else{
         //desired page isn't loaded, and there is history
-        currentPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
-        currentPage.folder = dataMaster.currentFolder;
-        pages[depth+1] = currentPage;
-        [pages removeObjectsAfterIndex:depth+2];
+        [pages removeObjectsAfterIndex:depth+1];
+        //remove objects and remove from superview
+        PageObject* newPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
+        [newPage.scrollView setFrameOrigin:CGPointMake(_pagedView.frame.origin.x+_pagedView.frame.size.width, _pagedView.frame.origin.y)];
+        newPage.folder = dataMaster.currentFolder;
+        [pages addObject:newPage];
     }
-    [[_pageController animator]navigateForwardToObject:currentPage];
-//    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context){
-//        [[_pageController animator] navigateForwardToObject:currentPage];
-//    }completionHandler:^{
-//        [_pageController completeTransition];
-//    }];
     depth+=1;
-
+    NSView* animatedView = ((PageObject*)pages[depth]).scrollView;
+//    [animatedView setFrameOrigin:_pagedView.frame.origin];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+        context.duration = 1;
+        [animatedView.animator setFrameOrigin:_pagedView.frame.origin];
+    }completionHandler:nil];
 }
 - (IBAction)backButtonPressed:(id)sender {
     if([dataMaster openParentFolder]){
+        NSView* animatedView = ((PageObject*)pages[depth]).scrollView;
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+            context.duration = 1;
+            [animatedView.animator setFrameOrigin:CGPointMake(_pagedView.frame.origin.x+_pagedView.frame.size.width, _pagedView.frame.origin.y)];
+        }completionHandler:nil];
         depth--;
-        currentPage = pages[depth];
-        [_pageController navigateBack:nil];
+        //animate back
     }
 }
 

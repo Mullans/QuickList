@@ -14,18 +14,12 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
-                <outlet property="pageController" destination="qUZ-gb-KTf" id="0WV-bq-gFX"/>
                 <outlet property="pagedView" destination="6p7-gI-WSw" id="fV3-Iv-CHp"/>
                 <outlet property="rightHeaderButton" destination="i2m-CN-bcx" id="AQH-MD-Zr5"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <pagecontroller id="qUZ-gb-KTf">
-            <connections>
-                <outlet property="view" destination="6p7-gI-WSw" id="etd-DM-rIu"/>
-            </connections>
-        </pagecontroller>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="QuickList" id="1Xt-HY-uBw">
