@@ -99,6 +99,7 @@
         newPage.folder = dataMaster.currentFolder;
         [pages addObject:newPage];
         [newPage.scrollView setFrameOrigin:CGPointMake(_pagedView.frame.origin.x+_pagedView.frame.size.width, _pagedView.frame.origin.y)];
+        [_pagedView addSubview:newPage.scrollView];
     }else if([((PageObject*)pages[depth+1]).identifier isEqualToString:dataMaster.currentFolder.identifier]){
         //desired page is already loaded
     }else{
@@ -107,6 +108,7 @@
         //remove objects and remove from superview
         PageObject* newPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
         [newPage.scrollView setFrameOrigin:CGPointMake(_pagedView.frame.origin.x+_pagedView.frame.size.width, _pagedView.frame.origin.y)];
+        [_pagedView addSubview:newPage.scrollView];
         newPage.folder = dataMaster.currentFolder;
         [pages addObject:newPage];
     }
@@ -114,7 +116,7 @@
     NSView* animatedView = ((PageObject*)pages[depth]).scrollView;
 //    [animatedView setFrameOrigin:_pagedView.frame.origin];
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-        context.duration = 1;
+        context.duration = .4;
         [animatedView.animator setFrameOrigin:_pagedView.frame.origin];
     }completionHandler:nil];
 }
