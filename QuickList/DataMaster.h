@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 #import "FolderObject.h"
+#import "DragTableView.h"
 NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, FOFolderType) {
     FORoot,

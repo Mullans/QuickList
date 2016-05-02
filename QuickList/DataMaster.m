@@ -11,7 +11,7 @@
 @implementation DataMaster
 +(NSArray*)makeTableForView:(NSView* _Nonnull)view dataSource:(id<NSTableViewDataSource> _Nullable)dataSource delegate:(id<NSTableViewDelegate> _Nullable)delegate{
     NSScrollView *tableContainer = [[NSScrollView alloc]initWithFrame:view.frame];
-    NSTableView *tableView = [[NSTableView alloc] initWithFrame:view.frame];
+    DragTableView *tableView = [[DragTableView alloc] initWithFrame:view.frame];
     NSTableColumn* column1 = [[NSTableColumn alloc]initWithIdentifier:@"Column1"];
     [column1 setWidth:tableView.frame.size.width];
     [tableView addTableColumn:column1];

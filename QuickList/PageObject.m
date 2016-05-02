@@ -7,7 +7,6 @@
 //
 
 #import "PageObject.h"
-
 @implementation PageObject
 -(NSString*)name{
     return _folder.name;

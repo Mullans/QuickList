@@ -19,16 +19,21 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Code for testing
-    //    [dataMaster newFolderNamed:@"Folder1" inFolder:nil];
-    //    [dataMaster newFolderNamed:@"Folder2" inFolder:nil];
-    //    [dataMaster newFolderNamed:@"Folder3" inFolder:nil];
-    
     dataMaster = [[DataMaster alloc]initWithContext:self.managedObjectContext];
+    
+//    FolderObject* folder1 = [dataMaster newFolderNamed:@"Folder1" inFolder:nil];
+//    FolderObject* folder1_1 = [dataMaster newFolderNamed:@"Folder1_1" inFolder:folder1];
+//    FolderObject* folder1_2 = [dataMaster newFolderNamed:@"Folder1_2" inFolder:folder1];
+//    FolderObject* folder2 = [dataMaster newFolderNamed:@"Folder2" inFolder:nil];
+//    FolderObject* folder2_1 = [dataMaster newFolderNamed:@"Folder2_1" inFolder:folder2];
+//    FolderObject* folder3 = [dataMaster newFolderNamed:@"Folder3" inFolder:nil];
+    
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* newPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
     newPage.folder = dataMaster.currentFolder;
     pages = [NSMutableArray arrayWithObject:newPage];
     [_pagedView addSubview:newPage.scrollView];
+    [newPage.tableView registerForDraggedTypes:[NSArray arrayWithObjects:NSPasteboardTypeHTML,NSPasteboardTypePNG,NSPasteboardTypeString,NSURLPboardType, nil]];
     depth = 0;
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -84,6 +89,37 @@
         groupButton = TRUE;
     }
 }
+-(void)tableView:(NSTableView *)tableView draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint forRowIndexes:(NSIndexSet *)rowIndexes{
+    NSLog(@"dragginStarted");
+}
+-(BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation{
+    NSPasteboard* pasteboard = [info draggingPasteboard];
+//    if([[pasteboard types] containsObject:NSPasteboardTypeString]){
+//        NSLog(@"string");
+//    }else if([[pasteboard types] containsObject:NSPasteboardTypePNG]){
+//        NSLog(@"png");
+//    }else if([[pasteboard types] containsObject:NSPasteboardURLReadingFileURLsOnlyKey]){
+//        NSLog(@"file url");
+//    }else if([[pasteboard types] containsObject:NSPasteboardTypeHTML]){
+//        NSLog(@"html");
+//    }else if([[pasteboard types] containsObject:NSURLPboardType]){
+//        NSLog(@"url");
+//        NSURL *fileURL = [NSURL URLFromPasteboard:pasteboard];
+//        NSLog(@"%@",fileURL.absoluteString);
+//    }else{
+//        NSLog(@"other");
+//    }
+    NSLog(@"%ld -- %lu",(long)row,(unsigned long)dropOperation);
+    NSArray* items = [pasteboard readObjectsForClasses:@[[NSImage class],[NSString class],[NSURL class],[NSAttributedString class]] options:nil];
+    for(id object in items){
+        NSLog(@"%@",[object class]);
+    }
+    //if row==number of objects && dropOperation == 1
+    return true;
+}
+-(NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation{
+    return dropOperation==NSTableViewDropAbove;
+}
 #pragma mark - Table Buttons
 -(void)tableButtonPressed:(id)sender{
     NSButton* senderButton = (NSButton*)sender;
@@ -113,12 +149,15 @@
         [pages addObject:newPage];
     }
     depth+=1;
+    currentTableContents = [dataMaster currentFolderContents];
+    PageObject* tempView = ((PageObject*)pages[depth]);
+    [tempView reloadTable];
     NSView* animatedView = ((PageObject*)pages[depth]).scrollView;
-//    [animatedView setFrameOrigin:_pagedView.frame.origin];
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
         context.duration = .4;
         [animatedView.animator setFrameOrigin:_pagedView.frame.origin];
     }completionHandler:nil];
+    
 }
 - (IBAction)backButtonPressed:(id)sender {
     if([dataMaster openParentFolder]){
@@ -127,6 +166,7 @@
             context.duration = 1;
             [animatedView.animator setFrameOrigin:CGPointMake(_pagedView.frame.origin.x+_pagedView.frame.size.width, _pagedView.frame.origin.y)];
         }completionHandler:nil];
+        currentTableContents = [dataMaster currentFolderContents];
         depth--;
         //animate back
     }
