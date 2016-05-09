@@ -18,6 +18,8 @@
     NSArray* currentTableContents;
     NSInteger depth;
     NSMutableArray* pages;
+    NSInteger activeName;
+    NSTextField* activeField;
 }
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -32,6 +34,12 @@
 
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)rightHeaderButtonPressed:(id)sender;
+- (IBAction)newGroupItem:(id)sender;
+- (IBAction)renameSelectedItem:(id)sender;
+- (IBAction)goToParentItem:(id)sender;
+- (IBAction)goToSelectedItem:(id)sender;
+- (IBAction)moveSelectedUpItem:(id)sender;
+- (IBAction)groupSelectedItem:(id)sender;
 
 @end
 

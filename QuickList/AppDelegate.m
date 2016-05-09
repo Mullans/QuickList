@@ -27,7 +27,7 @@
 //    FolderObject* folder2 = [dataMaster newFolderNamed:@"Folder2" inFolder:nil];
 //    FolderObject* folder2_1 = [dataMaster newFolderNamed:@"Folder2_1" inFolder:folder2];
 //    FolderObject* folder3 = [dataMaster newFolderNamed:@"Folder3" inFolder:nil];
-    
+    activeName = -1;
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* newPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
     newPage.folder = dataMaster.currentFolder;
@@ -57,7 +57,7 @@
     CGFloat numberOfRows = [[NSNumber numberWithInteger: tableView.numberOfRows] floatValue];
     CGFloat colorFloat = (0.8)*1+(0.2)*(row/numberOfRows);
     result.borderColor = [NSColor colorWithRed:0.7 green:1-colorFloat blue:colorFloat alpha:1];
-    NSTextField *cellTF = [[NSTextField alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width, result.bounds.size.height)];
+    NSTextField *cellTF = [[NSTextField alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width-30, result.bounds.size.height)];
     [cellTF setAutoresizingMask:NSViewWidthSizable];
     [result addSubview:cellTF];
     result.textField = cellTF;
@@ -66,7 +66,12 @@
     [cellTF setDrawsBackground:NO];
     FolderObject* rowFolder = (FolderObject*)currentTableContents[row];
     result.textField.stringValue = rowFolder.name;
-    
+    if(row==activeName){
+        result.textField.editable = YES;
+        result.textField.target = self;
+        result.textField.action = @selector(finishEditingName:);
+        activeField = result.textField;
+    }
     NSFontManager *fontManager = [NSFontManager sharedFontManager];
     NSFont *cellFont = [fontManager fontWithFamily:@"Verdana"
                                               traits:NSBoldFontMask
@@ -107,6 +112,13 @@
     [result addSubview:newButton];
     result.textField.font = cellFont;
     return result;
+}
+-(void)finishEditingName:(id)sender{
+    NSTextField* textField = (NSTextField*)sender;
+    textField.editable = NO;
+    FolderObject* currentFolder = currentTableContents[activeName];
+    currentFolder.name = textField.stringValue;
+    activeName = -1;
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
     return dataMaster.currentFolderSize;
@@ -154,7 +166,6 @@
     NSArray* items = [pasteboard readObjectsForClasses:@[[NSImage class],[NSString class],[NSURL class],[NSAttributedString class]] options:nil];
     for(id object in items){
         NSLog(@"%@ %@",object,[object class]);
-        //TODO: figure out proper name
         FolderObject* newFolder = [dataMaster newFolderNamed:@"draggedItem" inFolder:nil];
         if([object isKindOfClass:[NSImage class]]){
             newFolder.type = FOImage;
@@ -252,7 +263,7 @@
     }completionHandler:nil];
     _headerLabel.stringValue = dataMaster.currentFolderName;
 }
-- (IBAction)backButtonPressed:(id)sender {
+-(void)previousPage{
     if([dataMaster openParentFolder]){
         PageObject* backPage = pages[depth];
         NSView* animatedView = backPage.scrollView;
@@ -266,20 +277,94 @@
         //animate back
         _headerLabel.stringValue = dataMaster.currentFolderName;
     }
-    
+}
+- (IBAction)backButtonPressed:(id)sender {
+    [self previousPage];
 }
 
 - (IBAction)rightHeaderButtonPressed:(id)sender {
     NSString* newFolderName = [self getFolderName];
     FolderObject* newFolder = [dataMaster newFolderNamed:newFolderName inFolder:nil];
     if(groupButton){
-       //TODO: set all grouped items to group
         PageObject* currentPage = pages[depth];
         [currentPage.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
             FolderObject* item = currentTableContents[idx];
             item.parentFolder = newFolder;
         }];
     }
+    currentTableContents = dataMaster.currentFolderContents;
+    PageObject* backPage = pages[depth];
+    [backPage reloadTable];
+}
+
+
+#pragma mark MenuItems
+- (IBAction)newGroupItem:(id)sender {
+    NSString* newFolderName = [self getFolderName];
+    [dataMaster newFolderNamed:newFolderName inFolder:nil];
+    currentTableContents = dataMaster.currentFolderContents;
+    PageObject* backPage = pages[depth];
+    [backPage reloadTable];
+}
+
+- (IBAction)renameSelectedItem:(id)sender {
+    PageObject* currentPage = pages[depth];
+    if(currentPage.tableView.selectedRowIndexes.count>1){
+        NSAlert* folderAlert = [[NSAlert alloc]init];
+        [folderAlert setMessageText:@"Multiple Items Selected."];
+        [folderAlert setIcon:[NSImage imageNamed:NSImageNameCaution]];
+        [folderAlert addButtonWithTitle:@"OK"];
+    }else if(currentPage.tableView.selectedRow==-1){
+        NSAlert* folderAlert = [[NSAlert alloc]init];
+        [folderAlert setMessageText:@"No Item Selected."];
+        [folderAlert setIcon:[NSImage imageNamed:NSImageNameCaution]];
+        [folderAlert addButtonWithTitle:@"OK"];
+    }else{
+        activeName = currentPage.tableView.selectedRow;
+        [currentPage.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:currentPage.tableView.selectedRow] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+        [activeField becomeFirstResponder];
+    }
+}
+
+- (IBAction)goToParentItem:(id)sender {
+    [self previousPage];
+}
+
+- (IBAction)goToSelectedItem:(id)sender {
+    PageObject* currentPage = pages[depth];
+    if(currentPage.tableView.selectedRowIndexes.count>1){
+        NSAlert* folderAlert = [[NSAlert alloc]init];
+        [folderAlert setMessageText:@"Multiple Items Selected."];
+        [folderAlert setIcon:[NSImage imageNamed:NSImageNameCaution]];
+        [folderAlert addButtonWithTitle:@"OK"];
+    }else if(currentPage.tableView.selectedRow==-1){
+        NSAlert* folderAlert = [[NSAlert alloc]init];
+        [folderAlert setMessageText:@"No Item Selected."];
+        [folderAlert setIcon:[NSImage imageNamed:NSImageNameCaution]];
+        [folderAlert addButtonWithTitle:@"OK"];
+    }else{
+        [self nextPageWithIndex:currentPage.tableView.selectedRow];
+    }
+}
+
+- (IBAction)moveSelectedUpItem:(id)sender {
+    PageObject* currentPage = pages[depth];
+    [currentPage.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        FolderObject* item = currentTableContents[idx];
+        item.parentFolder = item.parentFolder.parentFolder;
+    }];
+    currentTableContents = dataMaster.currentFolderContents;
+    [self previousPage];
+}
+
+- (IBAction)groupSelectedItem:(id)sender {
+    NSString* newFolderName = [self getFolderName];
+    FolderObject* newFolder = [dataMaster newFolderNamed:newFolderName inFolder:nil];
+    PageObject* currentPage = pages[depth];
+    [currentPage.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        FolderObject* item = currentTableContents[idx];
+        item.parentFolder = newFolder;
+    }];
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* backPage = pages[depth];
     [backPage reloadTable];
