@@ -28,8 +28,10 @@
 
 @property (nonatomic) NSArray *tableArray;
 @property (weak) IBOutlet NSButton *rightHeaderButton;
+@property (weak) IBOutlet NSTextField *headerLabel;
 
 - (IBAction)backButtonPressed:(id)sender;
+- (IBAction)rightHeaderButtonPressed:(id)sender;
 
 @end
 

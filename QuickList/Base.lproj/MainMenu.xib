@@ -14,6 +14,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="headerLabel" destination="WH2-jZ-qwx" id="gWG-cC-dxP"/>
                 <outlet property="pagedView" destination="6p7-gI-WSw" id="fV3-Iv-CHp"/>
                 <outlet property="rightHeaderButton" destination="i2m-CN-bcx" id="AQH-MD-Zr5"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
@@ -672,19 +673,21 @@
         <window title="QuickList" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="507" height="626"/>
+            <rect key="contentRect" x="335" y="390" width="500" height="800"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <value key="minSize" type="size" width="500" height="200"/>
+            <value key="maxSize" type="size" width="500" height="1500"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="507" height="626"/>
+                <rect key="frame" x="0.0" y="0.0" width="500" height="800"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="6p7-gI-WSw">
-                        <rect key="frame" x="0.0" y="0.0" width="507" height="586"/>
+                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6p7-gI-WSw">
+                        <rect key="frame" x="0.0" y="174" width="507" height="586"/>
                     </customView>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="ppn-2m-Apa" customClass="HeaderView">
-                        <rect key="frame" x="0.0" y="586" width="507" height="40"/>
+                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ppn-2m-Apa" customClass="HeaderView">
+                        <rect key="frame" x="0.0" y="760" width="507" height="40"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WH2-jZ-qwx">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WH2-jZ-qwx">
                                 <rect key="frame" x="191" y="11" width="125" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Main Label For Lists" id="8Cy-lN-9B1">
                                     <font key="font" metaFont="system"/>
@@ -706,7 +709,7 @@
                                     <action selector="backButtonPressed:" target="Voe-Tx-rLC" id="WJ6-2u-UkF"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i2m-CN-bcx">
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i2m-CN-bcx">
                                 <rect key="frame" x="471" y="5" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="kcJ-my-4Tg"/>
@@ -716,6 +719,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="rightHeaderButtonPressed:" target="Voe-Tx-rLC" id="r41-5e-yU7"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>

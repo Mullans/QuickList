@@ -35,6 +35,7 @@
     [_pagedView addSubview:newPage.scrollView];
     [newPage.tableView registerForDraggedTypes:[NSArray arrayWithObjects:NSPasteboardTypeHTML,NSPasteboardTypePNG,NSPasteboardTypeString,NSURLPboardType, nil]];
     depth = 0;
+    _headerLabel.stringValue = dataMaster.currentFolderName;
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
@@ -63,7 +64,8 @@
     [cellTF setBordered:NO];
     [cellTF setEditable:NO];
     [cellTF setDrawsBackground:NO];
-    result.textField.stringValue = ((FolderObject*)currentTableContents[row]).name;
+    FolderObject* rowFolder = (FolderObject*)currentTableContents[row];
+    result.textField.stringValue = rowFolder.name;
     
     NSFontManager *fontManager = [NSFontManager sharedFontManager];
     NSFont *cellFont = [fontManager fontWithFamily:@"Verdana"
@@ -71,9 +73,37 @@
                                               weight:0
                                                 size:20];
     NSButton *newButton = [[NSButton alloc]initWithFrame:CGRectMake(result.frame.size.width-25, result.frame.size.height-30, 20, 20)];
-    [newButton setTarget:self];
-    [newButton setAction:@selector(tableButtonPressed:)];
-    [newButton setIdentifier:[[NSNumber numberWithInteger:row] stringValue]];
+    switch (rowFolder.type) {
+        case FOHTML:
+            [newButton setImage:[NSImage imageNamed:@"html"]];
+            break;
+        case FOLocalURL:
+            [newButton setImage:[NSImage imageNamed:@"url"]];
+            break;
+        case FOTextFile:
+            [newButton setImage:[NSImage imageNamed:@"text"]];
+            break;
+        case FOImage:
+            [newButton setImage:[NSImage imageNamed:@"image"]];
+            break;
+        case FOPDF:
+            [newButton setImage:[NSImage imageNamed:@"pdf"]];
+            break;
+        default:
+            [newButton setImage:[NSImage imageNamed:@"next"]];
+            break;
+    }
+    [((NSButtonCell*)[newButton cell]) setImageScaling:NSImageScaleProportionallyDown];
+    [newButton setBezelStyle:NSShadowlessSquareBezelStyle];
+    [newButton setButtonType:NSMomentaryPushInButton];
+    if(rowFolder.type==FODefault){
+        [newButton setTarget:self];
+        [newButton setAction:@selector(tableButtonPressed:)];
+        [newButton setIdentifier:[[NSNumber numberWithInteger:row] stringValue]];
+    }else{
+        [newButton setBordered:NO];
+        [newButton setEnabled:NO];
+    }
     [result addSubview:newButton];
     result.textField.font = cellFont;
     return result;
@@ -84,6 +114,7 @@
 -(void)tableViewSelectionIsChanging:(NSNotification *)notification{
     if([(NSTableView*)notification.object selectedRowIndexes].count<=1){
         [_rightHeaderButton setImage:[NSImage imageNamed:@"NSAddTemplate"]];
+        groupButton = FALSE;
     }else{
         [_rightHeaderButton setImage:[NSImage imageNamed:@"NSFolder"]];
         groupButton = TRUE;
@@ -92,27 +123,88 @@
 -(void)tableView:(NSTableView *)tableView draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint forRowIndexes:(NSIndexSet *)rowIndexes{
     NSLog(@"dragginStarted");
 }
+-(NSString*)getFolderName{
+    NSAlert* folderAlert = [[NSAlert alloc]init];
+    [folderAlert setMessageText:@"What is the title of the new group?"];
+    [folderAlert setIcon:[NSImage imageNamed:NSImageNameFolder]];
+    [folderAlert addButtonWithTitle:@"OK"];
+    [folderAlert addButtonWithTitle:@"Cancel"];
+    NSTextField* input = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,200,24)];
+    [folderAlert setAccessoryView:input];
+    NSInteger response = [folderAlert runModal];
+    if(response==NSAlertFirstButtonReturn){
+        return input.stringValue;
+    }else if(response==NSAlertSecondButtonReturn){
+        return @"Untitled Group";
+    }else{
+        NSLog(@"Folder alert error");
+        return @"Untitled Group";
+    }
+}
 -(BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation{
     NSPasteboard* pasteboard = [info draggingPasteboard];
-    NSLog(@"%ld -- %lu",(long)row,(unsigned long)dropOperation);
-    if(dropOperation==NSTableViewDropAbove){
-        NSArray* items = [pasteboard readObjectsForClasses:@[[NSImage class],[NSString class],[NSURL class],[NSAttributedString class]] options:nil];
-        for(id object in items){
-            NSLog(@"%@",[object class]);
-        }
-        //if row==number of objects && dropOperation == 1
-        [dataMaster newFolderNamed:@"draggedItem" inFolder:nil];
-        currentTableContents = dataMaster.currentFolderContents;
-        PageObject* tempView = ((PageObject*)pages[depth]);
-        //TODO: change this so it only reloads the relevant lines
-        [tempView reloadTable];
-        return true;
-    }else{
-        NSLog(@"Drop on item %ld",row);
-        [dataMaster newFolderNamed:@"draggedItemInFolder" inFolder:currentTableContents[row]];
+//    NSLog(@"%ld -- %lu",(long)row,(unsigned long)dropOperation);
+    if(dropOperation==NSTableViewDropOn){
+        NSString* folderName = [self getFolderName];
+        FolderObject* groupFolder = [dataMaster newFolderNamed:folderName inFolder:nil];
+        [groupFolder setParentFolder:dataMaster.currentFolder.parentFolder];
+        [dataMaster.currentFolder setParentFolder:groupFolder];
         [self nextPageWithIndex:row];
-        return true;
     }
+    NSArray* items = [pasteboard readObjectsForClasses:@[[NSImage class],[NSString class],[NSURL class],[NSAttributedString class]] options:nil];
+    for(id object in items){
+        NSLog(@"%@ %@",object,[object class]);
+        //TODO: figure out proper name
+        FolderObject* newFolder = [dataMaster newFolderNamed:@"draggedItem" inFolder:nil];
+        if([object isKindOfClass:[NSImage class]]){
+            newFolder.type = FOImage;
+            NSString* nameString = ((NSImage*)object).name;
+            if(nameString==nil){
+                nameString = @"untitledImage";
+            }
+            newFolder.name = nameString;
+        }else if([object isKindOfClass:[NSString class]]||[object isKindOfClass:[NSAttributedString class]]){
+            NSString* itemString;
+            if([object isKindOfClass:[NSAttributedString class]]){
+                itemString = [object string];
+            }else{
+                itemString = object;
+            }
+            if ([itemString hasPrefix:@"http://"] || [itemString hasPrefix:@"https://"])
+            {
+                newFolder.type = FOHTML;
+                NSString * htmlCode = [NSString stringWithContentsOfURL:[NSURL URLWithString:itemString] encoding:NSASCIIStringEncoding error:nil];
+                NSString * start = @"<title>";
+                NSRange range1 = [htmlCode rangeOfString:start];
+                NSString * end = @"</title>";
+                NSRange range2 = [htmlCode rangeOfString:end];
+                if(range1.location==NSNotFound||range2.location==NSNotFound){
+                    newFolder.name = ((NSURL*)itemString).host;
+                }else{
+                    NSString * subString = [htmlCode substringWithRange:NSMakeRange(range1.location + 7, range2.location - range1.location - 7)];
+                    newFolder.name = subString;
+                }
+                if(newFolder.name==nil){
+                    newFolder.name = @"Untitled URL";
+                }
+            }else{
+                newFolder.type = FOTextFile;
+                newFolder.name = [itemString substringToIndex:MIN(itemString.length,11)];
+            }
+        }else if([object isKindOfClass:[NSURL class]]){
+            newFolder.type = FOLocalURL;
+            newFolder.name = ((NSURL*)object).lastPathComponent;
+        }else{
+            [NSException raise:@"Invalid Dragged Object" format:@"Type %@ is invalid", [object class]];
+        }
+        newFolder.name = [[newFolder.name componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
+//        NSLog(@"Name:%@",newFolder.name);
+        currentTableContents = dataMaster.currentFolderContents;
+    }
+    //TODO: change this so it only reloads the relevant lines
+    PageObject* tempView = ((PageObject*)pages[depth]);
+    [tempView reloadTable];
+    return true;
 }
 -(NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation{
     return (row==currentTableContents.count&&dropOperation==NSTableViewDropAbove)||(dropOperation==NSTableViewDropOn);
@@ -127,6 +219,7 @@
     [pages[depth] deselectAll];
     if(groupButton){
         [_rightHeaderButton setImage:[NSImage imageNamed:@"NSAddTemplate"]];
+        groupButton = FALSE;
     }
     [dataMaster openFolder:(FolderObject*)currentTableContents[index]];
     if(depth+1>pages.count-1){
@@ -157,10 +250,13 @@
         context.duration = .4;
         [animatedView.animator setFrameOrigin:_pagedView.frame.origin];
     }completionHandler:nil];
+    _headerLabel.stringValue = dataMaster.currentFolderName;
 }
 - (IBAction)backButtonPressed:(id)sender {
     if([dataMaster openParentFolder]){
-        NSView* animatedView = ((PageObject*)pages[depth]).scrollView;
+        PageObject* backPage = pages[depth];
+        NSView* animatedView = backPage.scrollView;
+        [backPage reloadTable];
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
             context.duration = 1;
             [animatedView.animator setFrameOrigin:CGPointMake(_pagedView.frame.origin.x+_pagedView.frame.size.width, _pagedView.frame.origin.y)];
@@ -168,7 +264,25 @@
         currentTableContents = [dataMaster currentFolderContents];
         depth--;
         //animate back
+        _headerLabel.stringValue = dataMaster.currentFolderName;
     }
+    
+}
+
+- (IBAction)rightHeaderButtonPressed:(id)sender {
+    NSString* newFolderName = [self getFolderName];
+    FolderObject* newFolder = [dataMaster newFolderNamed:newFolderName inFolder:nil];
+    if(groupButton){
+       //TODO: set all grouped items to group
+        PageObject* currentPage = pages[depth];
+        [currentPage.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+            FolderObject* item = currentTableContents[idx];
+            item.parentFolder = newFolder;
+        }];
+    }
+    currentTableContents = dataMaster.currentFolderContents;
+    PageObject* backPage = pages[depth];
+    [backPage reloadTable];
 }
 
 #pragma mark - Core Data stack
