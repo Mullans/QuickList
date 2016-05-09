@@ -94,41 +94,41 @@
 }
 -(BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation{
     NSPasteboard* pasteboard = [info draggingPasteboard];
-//    if([[pasteboard types] containsObject:NSPasteboardTypeString]){
-//        NSLog(@"string");
-//    }else if([[pasteboard types] containsObject:NSPasteboardTypePNG]){
-//        NSLog(@"png");
-//    }else if([[pasteboard types] containsObject:NSPasteboardURLReadingFileURLsOnlyKey]){
-//        NSLog(@"file url");
-//    }else if([[pasteboard types] containsObject:NSPasteboardTypeHTML]){
-//        NSLog(@"html");
-//    }else if([[pasteboard types] containsObject:NSURLPboardType]){
-//        NSLog(@"url");
-//        NSURL *fileURL = [NSURL URLFromPasteboard:pasteboard];
-//        NSLog(@"%@",fileURL.absoluteString);
-//    }else{
-//        NSLog(@"other");
-//    }
     NSLog(@"%ld -- %lu",(long)row,(unsigned long)dropOperation);
-    NSArray* items = [pasteboard readObjectsForClasses:@[[NSImage class],[NSString class],[NSURL class],[NSAttributedString class]] options:nil];
-    for(id object in items){
-        NSLog(@"%@",[object class]);
+    if(dropOperation==NSTableViewDropAbove){
+        NSArray* items = [pasteboard readObjectsForClasses:@[[NSImage class],[NSString class],[NSURL class],[NSAttributedString class]] options:nil];
+        for(id object in items){
+            NSLog(@"%@",[object class]);
+        }
+        //if row==number of objects && dropOperation == 1
+        [dataMaster newFolderNamed:@"draggedItem" inFolder:nil];
+        currentTableContents = dataMaster.currentFolderContents;
+        PageObject* tempView = ((PageObject*)pages[depth]);
+        //TODO: change this so it only reloads the relevant lines
+        [tempView reloadTable];
+        return true;
+    }else{
+        NSLog(@"Drop on item %ld",row);
+        [dataMaster newFolderNamed:@"draggedItemInFolder" inFolder:currentTableContents[row]];
+        [self nextPageWithIndex:row];
+        return true;
     }
-    //if row==number of objects && dropOperation == 1
-    return true;
 }
 -(NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation{
-    return dropOperation==NSTableViewDropAbove;
+    return (row==currentTableContents.count&&dropOperation==NSTableViewDropAbove)||(dropOperation==NSTableViewDropOn);
 }
 #pragma mark - Table Buttons
 -(void)tableButtonPressed:(id)sender{
     NSButton* senderButton = (NSButton*)sender;
-//    NSLog(@"%@",senderButton.identifier);
+    NSInteger senderIndex = [senderButton.identifier integerValue];
+    [self nextPageWithIndex:senderIndex];
+}
+-(void)nextPageWithIndex:(NSInteger)index{
     [pages[depth] deselectAll];
     if(groupButton){
         [_rightHeaderButton setImage:[NSImage imageNamed:@"NSAddTemplate"]];
     }
-    [dataMaster openFolder:(FolderObject*)currentTableContents[[senderButton.identifier integerValue]]];
+    [dataMaster openFolder:(FolderObject*)currentTableContents[index]];
     if(depth+1>pages.count-1){
         //desired page isn't loaded, and nothing exists at that depth
         PageObject* newPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
@@ -157,7 +157,6 @@
         context.duration = .4;
         [animatedView.animator setFrameOrigin:_pagedView.frame.origin];
     }completionHandler:nil];
-    
 }
 - (IBAction)backButtonPressed:(id)sender {
     if([dataMaster openParentFolder]){

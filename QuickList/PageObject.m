@@ -24,7 +24,6 @@
     
     return self;
 }
-
 -(void)setFolder:(FolderObject *)folder{
     _folder = folder;
     _identifier = [NSString stringWithFormat:@"%@-%f",_folder.name,_folder.dateAdded];
