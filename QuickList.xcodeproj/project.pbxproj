@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3D6FDEFF1CCDDC06000D6A12 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6FDEFE1CCDDC06000D6A12 /* HeaderView.m */; };
-		3D70D1A41CD6EB430063CA69 /* DragTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D70D1A31CD6EB430063CA69 /* DragTableView.m */; };
 		3D81D7ED1CCDB0B8001AB135 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */; };
 		3D81D7F01CCDB0B8001AB135 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D7EF1CCDB0B8001AB135 /* main.m */; };
 		3D81D7F31CCDB0B8001AB135 /* QuickList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D7F11CCDB0B8001AB135 /* QuickList.xcdatamodeld */; };
@@ -48,8 +47,6 @@
 /* Begin PBXFileReference section */
 		3D6FDEFD1CCDDC06000D6A12 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
 		3D6FDEFE1CCDDC06000D6A12 /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
-		3D70D1A21CD6EB430063CA69 /* DragTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragTableView.h; sourceTree = "<group>"; };
-		3D70D1A31CD6EB430063CA69 /* DragTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragTableView.m; sourceTree = "<group>"; };
 		3D81D7E81CCDB0B8001AB135 /* QuickList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D81D7EB1CCDB0B8001AB135 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -135,8 +132,6 @@
 				3D81D7EB1CCDB0B8001AB135 /* AppDelegate.h */,
 				3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */,
 				3DF51E581CE043460036F635 /* Windows */,
-				3D70D1A21CD6EB430063CA69 /* DragTableView.h */,
-				3D70D1A31CD6EB430063CA69 /* DragTableView.m */,
 				3DCA58E81CCEF94B00DFE34E /* NSMutableArray+Management.h */,
 				3DCA58E91CCEF94B00DFE34E /* NSMutableArray+Management.m */,
 				3DFA12EA1CCDCE0A00B8E25C /* CustomTableCellView.h */,
@@ -344,7 +339,6 @@
 				3DCA58E11CCEC60900DFE34E /* FolderObject+CoreDataProperties.m in Sources */,
 				3D6FDEFF1CCDDC06000D6A12 /* HeaderView.m in Sources */,
 				3DF51E511CE042A40036F635 /* ImageWindowController.m in Sources */,
-				3D70D1A41CD6EB430063CA69 /* DragTableView.m in Sources */,
 				3D81D7ED1CCDB0B8001AB135 /* AppDelegate.m in Sources */,
 				3D81D7F31CCDB0B8001AB135 /* QuickList.xcdatamodeld in Sources */,
 				3DF51E561CE0433F0036F635 /* TextWindowController.m in Sources */,

@@ -11,7 +11,7 @@
 @implementation DataMaster
 +(NSArray*)makeTableForView:(NSView* _Nonnull)view dataSource:(id<NSTableViewDataSource> _Nullable)dataSource delegate:(id<NSTableViewDelegate> _Nullable)delegate{
     NSScrollView *tableContainer = [[NSScrollView alloc]initWithFrame:view.frame];
-    DragTableView *tableView = [[DragTableView alloc] initWithFrame:view.frame];
+    NSTableView *tableView = [[NSTableView alloc] initWithFrame:view.frame];
     NSTableColumn* column1 = [[NSTableColumn alloc]initWithIdentifier:@"Column1"];
     [column1 setWidth:tableView.frame.size.width];
     [tableView addTableColumn:column1];
@@ -29,6 +29,7 @@
     if(delegate!=nil){
         tableView.delegate = delegate;
     }
+    [tableView setDoubleAction:@selector(tableDoubleClicked:)];
     return @[tableContainer,tableView];
 }
 -(NSArray*)makeTableForView:(NSView* _Nonnull)view dataSource:(id<NSTableViewDataSource> _Nullable)dataSource delegate:(id<NSTableViewDelegate> _Nullable)delegate withData:(nonnull NSArray*)data{
@@ -154,5 +155,25 @@
 }
 -(void)setCurrentFolderName:(NSString *)currentFolderName{
     _currentFolder.name = currentFolderName;
+}
+-(void)deleteItem:(FolderObject*)item{
+    NSMutableArray* toDelete = [[NSMutableArray alloc]initWithObjects:item, nil];
+    if(item.type==FODefault){
+        for(FolderObject* subItem in item.subfolders){
+            [self addItemToDelete:subItem fromArray:toDelete];
+        }
+    }
+    for(FolderObject* subItem in toDelete){
+        [subItem.parentFolder removeSubfoldersObject:item];
+        [context deleteObject:subItem];
+//        NSLog(@"deleted object: %@",subItem.name);
+    }
+}
+-(NSMutableArray*)addItemToDelete:(FolderObject*)item fromArray:(NSMutableArray*)array{
+    [array addObject:item];
+    for(FolderObject* subItem in item.subfolders){
+        [self addItemToDelete:subItem fromArray:array];
+    }
+    return array;
 }
 @end

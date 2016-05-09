@@ -35,6 +35,8 @@
 @property (weak) IBOutlet NSButton *rightHeaderButton;
 @property (weak) IBOutlet NSTextField *headerLabel;
 
+-(void)tableDoubleClicked:(id)sender;
+
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)rightHeaderButtonPressed:(id)sender;
 - (IBAction)newGroupItem:(id)sender;
@@ -44,6 +46,6 @@
 - (IBAction)moveSelectedUpItem:(id)sender;
 - (IBAction)groupSelectedItem:(id)sender;
 - (IBAction)openSelectedItem:(id)sender;
-
+- (IBAction)deleteSelectedItem:(id)sender;
 @end
 

@@ -2,7 +2,7 @@
 //  FolderObject+CoreDataProperties.m
 //  QuickList
 //
-//  Created by Sean Mullan on 4/25/16.
+//  Created by Sean Mullan on 5/9/16.
 //  Copyright © 2016 SilentLupin. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,13 +13,13 @@
 
 @implementation FolderObject (CoreDataProperties)
 
-@dynamic type;
 @dynamic data;
-@dynamic name;
 @dynamic dateAdded;
 @dynamic dateChanged;
 @dynamic importance;
-@dynamic subfolders;
+@dynamic name;
+@dynamic type;
 @dynamic parentFolder;
+@dynamic subfolders;
 
 @end

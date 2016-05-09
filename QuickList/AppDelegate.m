@@ -134,7 +134,7 @@
     }
 }
 -(void)tableView:(NSTableView *)tableView draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint forRowIndexes:(NSIndexSet *)rowIndexes{
-    NSLog(@"dragginStarted");
+//    NSLog(@"draggingStarted");
 }
 -(NSString*)getFolderName{
     NSAlert* folderAlert = [[NSAlert alloc]init];
@@ -146,6 +146,9 @@
     [folderAlert setAccessoryView:input];
     NSInteger response = [folderAlert runModal];
     if(response==NSAlertFirstButtonReturn){
+        if([input.stringValue isEqualToString:@""]){
+            return @"Untitled Group";
+        }
         return input.stringValue;
     }else if(response==NSAlertSecondButtonReturn){
         return @"Untitled Group";
@@ -166,7 +169,7 @@
     }
     NSArray* items = [pasteboard readObjectsForClasses:@[[NSImage class],[NSString class],[NSURL class],[NSAttributedString class]] options:nil];
     for(id object in items){
-        NSLog(@"%@ %@",object,[object class]);
+//        NSLog(@"%@ %@",object,[object class]);
         FolderObject* newFolder = [dataMaster newFolderNamed:@"draggedItem" inFolder:nil];
         if([object isKindOfClass:[NSImage class]]){
             newFolder.type = FOImage;
@@ -226,6 +229,36 @@
 }
 -(NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation{
     return (row==currentTableContents.count&&dropOperation==NSTableViewDropAbove)||(dropOperation==NSTableViewDropOn);
+}
+-(void)tableDoubleClicked:(id)sender{
+    NSInteger row = [sender clickedRow];
+    if(row==-1){
+        return;
+    }
+    FolderObject* clickedFolder = currentTableContents[row];
+    if(clickedFolder.type==FOHTML||clickedFolder.type==FOLocalURL){
+        NSString *urlString = [[NSString alloc] initWithData:clickedFolder.data encoding:NSUTF16StringEncoding];
+        //            NSLog(@"%@",urlString);
+        NSURL *itemURL = [[NSURL alloc] initWithString:urlString];
+        [[NSWorkspace sharedWorkspace] openURL:itemURL];
+    }else if(clickedFolder.type==FOTextFile) {
+        NSString *textString = [[NSString alloc] initWithData:clickedFolder.data encoding:NSUTF16StringEncoding];
+        //            NSLog(@"%@",textString);
+        TextWindowController* newWindow = [[TextWindowController alloc]initWithWindowNibName:@"TextWindowController"];
+        [newWindow showWindow:nil];
+        newWindow.folder = clickedFolder;
+        [newWindow.textView setString:textString];
+        [subWindows addObject:newWindow];
+    }else if(clickedFolder.type==FOImage||clickedFolder.type==FOPDF){
+        ImageWindowController* newWindow = [[ImageWindowController alloc]initWithWindowNibName:@"ImageWindowController"];
+        [newWindow showWindow:nil];
+        [newWindow.imageView setImage:[[NSImage alloc]initWithData:clickedFolder.data]];
+        newWindow.window.title = clickedFolder.name;
+        [subWindows addObject:newWindow];
+    }else if(clickedFolder.type==FODefault){
+        [self nextPageWithIndex:row];
+    }
+
 }
 #pragma mark - Table Buttons
 -(void)tableButtonPressed:(id)sender{
@@ -394,12 +427,12 @@
             }
         }else if(item.type==FOHTML||item.type==FOLocalURL){
             NSString *urlString = [[NSString alloc] initWithData:item.data encoding:NSUTF16StringEncoding];
-            NSLog(@"%@",urlString);
+//            NSLog(@"%@",urlString);
             NSURL *itemURL = [[NSURL alloc] initWithString:urlString];
             [[NSWorkspace sharedWorkspace] openURL:itemURL];
         }else if(item.type==FOTextFile) {
             NSString *textString = [[NSString alloc] initWithData:item.data encoding:NSUTF16StringEncoding];
-            NSLog(@"%@",textString);
+//            NSLog(@"%@",textString);
             TextWindowController* newWindow = [[TextWindowController alloc]initWithWindowNibName:@"TextWindowController"];
             [newWindow showWindow:nil];
             newWindow.folder = item;
@@ -413,7 +446,6 @@
             [subWindows addObject:newWindow];
         }
         
-        //open html, url, image, etc...
     }
     if(folderToOpen==-2){
         NSAlert* folderAlert = [[NSAlert alloc]init];
@@ -423,6 +455,47 @@
     }else if(folderToOpen>=0){
         [self nextPageWithIndex:folderToOpen];
     }
+}
+
+
+- (IBAction)deleteSelectedItem:(id)sender {
+    NSAlert* folderAlert = [[NSAlert alloc]init];
+    [folderAlert setMessageText:@"Are You Sure You Want To Delete The Selected Items?"];
+    [folderAlert setIcon:[NSImage imageNamed:NSImageNameCaution]];
+    [folderAlert addButtonWithTitle:@"OK"];
+    [folderAlert addButtonWithTitle:@"Cancel"];
+    NSInteger response =[folderAlert runModal];
+    if(response==NSAlertFirstButtonReturn){
+        NSMutableArray* selectedItems = [[NSMutableArray alloc]init];
+        PageObject* currentPage = pages[depth];
+        
+        [currentPage.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+            FolderObject* currentFolder = currentTableContents[idx];
+            if(currentFolder.type==FODefault){
+                NSAlert* folderAlert2 = [[NSAlert alloc]init];
+                [folderAlert2 setMessageText:@"Are You Sure You Want To Delete The Selected Folder and All SubFolders?"];
+                [folderAlert2 setIcon:[NSImage imageNamed:NSImageNameCaution]];
+                [folderAlert2 addButtonWithTitle:@"OK"];
+                [folderAlert2 addButtonWithTitle:@"Cancel"];
+                NSInteger response2 = [folderAlert2 runModal];
+                if(response2==NSAlertFirstButtonReturn){
+                    [dataMaster deleteItem:currentFolder];
+                }else if(response2==NSAlertSecondButtonReturn){
+
+                }else{
+                    NSLog(@"error with delete response 2");
+                }
+            }else{
+                [dataMaster deleteItem:currentFolder];
+            }
+        }];
+    }else if(response==NSAlertSecondButtonReturn){
+    }else{
+        NSLog(@"error with delete response 1");
+    }
+    currentTableContents = [dataMaster currentFolderContents];
+    PageObject* currentPage = pages[depth];
+    [currentPage reloadTable];
 }
 
 #pragma mark - Core Data stack

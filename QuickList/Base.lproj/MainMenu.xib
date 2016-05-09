@@ -76,6 +76,11 @@
                                     <action selector="newGroupItem:" target="Voe-Tx-rLC" id="XuF-0l-Svp"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Open Selected" keyEquivalent="o" id="z8q-8I-tX4" userLabel="New Group">
+                                <connections>
+                                    <action selector="openSelectedItem:" target="Voe-Tx-rLC" id="ZDn-kO-1s4"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Rename Selected" id="v8U-5N-9jv" userLabel="New Group">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 DQ
@@ -85,9 +90,12 @@ DQ
                                     <action selector="renameSelectedItem:" target="Voe-Tx-rLC" id="8Xf-HC-bla"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Open Selected" keyEquivalent="o" id="z8q-8I-tX4" userLabel="New Group">
+                            <menuItem title="Delete Selected" id="t16-sZ-6zc" userLabel="New Group">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
                                 <connections>
-                                    <action selector="openSelectedItem:" target="Voe-Tx-rLC" id="ZDn-kO-1s4"/>
+                                    <action selector="deleteSelectedItem:" target="Voe-Tx-rLC" id="2f8-f0-00W"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Qsc-vm-U8c"/>
@@ -108,8 +116,7 @@ DQ
                                     <action selector="moveSelectedUpItem:" target="Voe-Tx-rLC" id="yK0-g6-bFo"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Group Selected" keyEquivalent="" id="U61-u8-PKA" userLabel="New Group">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                            <menuItem title="Group Selected" keyEquivalent="g" id="U61-u8-PKA" userLabel="New Group">
                                 <connections>
                                     <action selector="groupSelectedItem:" target="Voe-Tx-rLC" id="wRt-cu-b4i"/>
                                 </connections>

@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 #import "FolderObject.h"
-#import "DragTableView.h"
 NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, FOFolderType) {
     FORoot,
@@ -35,7 +34,7 @@ typedef NS_ENUM(NSInteger, FOFolderType) {
 @property (nonatomic, readonly) FolderObject* currentFolder;
 -(void)addNewTable:(NSTableView*)table scroll:(NSScrollView*)scrollView;
 -(void)removeTableAtIndex:(NSInteger)index;
-
+-(void)deleteItem:(FolderObject*)item;
 /**
  *  Returns NSArray for the given index
  *
