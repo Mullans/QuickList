@@ -35,6 +35,7 @@
     [_pagedView addSubview:newPage.scrollView];
     [newPage.tableView registerForDraggedTypes:[NSArray arrayWithObjects:NSPasteboardTypeHTML,NSPasteboardTypePNG,NSPasteboardTypeString,NSURLPboardType, nil]];
     depth = 0;
+    subWindows = [[NSMutableArray alloc]initWithCapacity:1];
     _headerLabel.stringValue = dataMaster.currentFolderName;
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -169,11 +170,13 @@
         FolderObject* newFolder = [dataMaster newFolderNamed:@"draggedItem" inFolder:nil];
         if([object isKindOfClass:[NSImage class]]){
             newFolder.type = FOImage;
-            NSString* nameString = ((NSImage*)object).name;
+            NSImage* newImage = (NSImage*)object;
+            NSString* nameString = newImage.name;
             if(nameString==nil){
                 nameString = @"untitledImage";
             }
             newFolder.name = nameString;
+            newFolder.data = [newImage TIFFRepresentation];
         }else if([object isKindOfClass:[NSString class]]||[object isKindOfClass:[NSAttributedString class]]){
             NSString* itemString;
             if([object isKindOfClass:[NSAttributedString class]]){
@@ -198,13 +201,17 @@
                 if(newFolder.name==nil){
                     newFolder.name = @"Untitled URL";
                 }
+                newFolder.data = [itemString dataUsingEncoding:NSUTF16StringEncoding];
             }else{
                 newFolder.type = FOTextFile;
                 newFolder.name = [itemString substringToIndex:MIN(itemString.length,11)];
+                newFolder.data = [itemString dataUsingEncoding:NSUTF16StringEncoding];
             }
         }else if([object isKindOfClass:[NSURL class]]){
             newFolder.type = FOLocalURL;
-            newFolder.name = ((NSURL*)object).lastPathComponent;
+            NSURL* itemURL = (NSURL*)object;
+            newFolder.name = itemURL.lastPathComponent;
+            newFolder.data = [itemURL.absoluteString dataUsingEncoding:NSUTF16StringEncoding];
         }else{
             [NSException raise:@"Invalid Dragged Object" format:@"Type %@ is invalid", [object class]];
         }
@@ -368,6 +375,54 @@
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* backPage = pages[depth];
     [backPage reloadTable];
+}
+
+- (IBAction)openSelectedItem:(id)sender {
+    NSMutableArray* selectedItems = [[NSMutableArray alloc]init];
+    NSInteger folderToOpen = -1;
+    PageObject* currentPage = pages[depth];
+    [currentPage.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [selectedItems addObject:[NSNumber numberWithInteger:idx]];
+    }];
+    for(NSNumber *index in selectedItems){
+        FolderObject* item = currentTableContents[[index integerValue]];
+        if(item.type==FODefault){
+            if(folderToOpen==-1){
+                folderToOpen=[index integerValue];
+            }else{
+                folderToOpen = -2;
+            }
+        }else if(item.type==FOHTML||item.type==FOLocalURL){
+            NSString *urlString = [[NSString alloc] initWithData:item.data encoding:NSUTF16StringEncoding];
+            NSLog(@"%@",urlString);
+            NSURL *itemURL = [[NSURL alloc] initWithString:urlString];
+            [[NSWorkspace sharedWorkspace] openURL:itemURL];
+        }else if(item.type==FOTextFile) {
+            NSString *textString = [[NSString alloc] initWithData:item.data encoding:NSUTF16StringEncoding];
+            NSLog(@"%@",textString);
+            TextWindowController* newWindow = [[TextWindowController alloc]initWithWindowNibName:@"TextWindowController"];
+            [newWindow showWindow:nil];
+            newWindow.folder = item;
+            [newWindow.textView setString:textString];
+            [subWindows addObject:newWindow];
+        }else if(item.type==FOImage||item.type==FOPDF){
+            ImageWindowController* newWindow = [[ImageWindowController alloc]initWithWindowNibName:@"ImageWindowController"];
+            [newWindow showWindow:nil];
+            [newWindow.imageView setImage:[[NSImage alloc]initWithData:item.data]];
+            newWindow.window.title = item.name;
+            [subWindows addObject:newWindow];
+        }
+        
+        //open html, url, image, etc...
+    }
+    if(folderToOpen==-2){
+        NSAlert* folderAlert = [[NSAlert alloc]init];
+        [folderAlert setMessageText:@"Multiple Folders Selected."];
+        [folderAlert setIcon:[NSImage imageNamed:NSImageNameCaution]];
+        [folderAlert addButtonWithTitle:@"OK"];
+    }else if(folderToOpen>=0){
+        [self nextPageWithIndex:folderToOpen];
+    }
 }
 
 #pragma mark - Core Data stack

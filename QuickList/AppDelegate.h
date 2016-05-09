@@ -11,6 +11,8 @@
 #import "CustomTableCellView.h"
 #import "PageObject.h"
 #import "NSMutableArray+Management.h"
+#import "ImageWindowController.h"
+#import "TextWindowController.h"
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate,NSTableViewDataSource>{
     NSMutableArray* tables;
     DataMaster* dataMaster;
@@ -20,6 +22,7 @@
     NSMutableArray* pages;
     NSInteger activeName;
     NSTextField* activeField;
+    NSMutableArray* subWindows;
 }
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -40,6 +43,7 @@
 - (IBAction)goToSelectedItem:(id)sender;
 - (IBAction)moveSelectedUpItem:(id)sender;
 - (IBAction)groupSelectedItem:(id)sender;
+- (IBAction)openSelectedItem:(id)sender;
 
 @end
 

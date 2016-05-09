@@ -20,6 +20,10 @@
 		3DCA58E11CCEC60900DFE34E /* FolderObject+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA58E01CCEC60900DFE34E /* FolderObject+CoreDataProperties.m */; };
 		3DCA58E41CCEEE3200DFE34E /* PageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA58E31CCEEE3200DFE34E /* PageObject.m */; };
 		3DCA58EA1CCEF94B00DFE34E /* NSMutableArray+Management.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA58E91CCEF94B00DFE34E /* NSMutableArray+Management.m */; };
+		3DF51E511CE042A40036F635 /* ImageWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF51E4F1CE042A40036F635 /* ImageWindowController.m */; };
+		3DF51E521CE042A40036F635 /* ImageWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DF51E501CE042A40036F635 /* ImageWindowController.xib */; };
+		3DF51E561CE0433F0036F635 /* TextWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF51E541CE0433F0036F635 /* TextWindowController.m */; };
+		3DF51E571CE0433F0036F635 /* TextWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DF51E551CE0433F0036F635 /* TextWindowController.xib */; };
 		3DFA12E91CCDBB8800B8E25C /* DataMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA12E81CCDBB8800B8E25C /* DataMaster.m */; };
 		3DFA12EC1CCDCE0A00B8E25C /* CustomTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA12EB1CCDCE0A00B8E25C /* CustomTableCellView.m */; };
 /* End PBXBuildFile section */
@@ -68,6 +72,12 @@
 		3DCA58E31CCEEE3200DFE34E /* PageObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageObject.m; sourceTree = "<group>"; };
 		3DCA58E81CCEF94B00DFE34E /* NSMutableArray+Management.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Management.h"; sourceTree = "<group>"; };
 		3DCA58E91CCEF94B00DFE34E /* NSMutableArray+Management.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Management.m"; sourceTree = "<group>"; };
+		3DF51E4E1CE042A40036F635 /* ImageWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageWindowController.h; sourceTree = "<group>"; };
+		3DF51E4F1CE042A40036F635 /* ImageWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageWindowController.m; sourceTree = "<group>"; };
+		3DF51E501CE042A40036F635 /* ImageWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageWindowController.xib; sourceTree = "<group>"; };
+		3DF51E531CE0433F0036F635 /* TextWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextWindowController.h; sourceTree = "<group>"; };
+		3DF51E541CE0433F0036F635 /* TextWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextWindowController.m; sourceTree = "<group>"; };
+		3DF51E551CE0433F0036F635 /* TextWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextWindowController.xib; sourceTree = "<group>"; };
 		3DFA12E71CCDBB8800B8E25C /* DataMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMaster.h; sourceTree = "<group>"; };
 		3DFA12E81CCDBB8800B8E25C /* DataMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMaster.m; sourceTree = "<group>"; };
 		3DFA12EA1CCDCE0A00B8E25C /* CustomTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableCellView.h; sourceTree = "<group>"; };
@@ -124,6 +134,7 @@
 			children = (
 				3D81D7EB1CCDB0B8001AB135 /* AppDelegate.h */,
 				3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */,
+				3DF51E581CE043460036F635 /* Windows */,
 				3D70D1A21CD6EB430063CA69 /* DragTableView.h */,
 				3D70D1A31CD6EB430063CA69 /* DragTableView.m */,
 				3DCA58E81CCEF94B00DFE34E /* NSMutableArray+Management.h */,
@@ -181,6 +192,19 @@
 				3DCA58DC1CCEBB8D00DFE34E /* FolderObject.m */,
 			);
 			name = DataObjects;
+			sourceTree = "<group>";
+		};
+		3DF51E581CE043460036F635 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				3DF51E4E1CE042A40036F635 /* ImageWindowController.h */,
+				3DF51E4F1CE042A40036F635 /* ImageWindowController.m */,
+				3DF51E501CE042A40036F635 /* ImageWindowController.xib */,
+				3DF51E531CE0433F0036F635 /* TextWindowController.h */,
+				3DF51E541CE0433F0036F635 /* TextWindowController.m */,
+				3DF51E551CE0433F0036F635 /* TextWindowController.xib */,
+			);
+			name = Windows;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +311,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D81D7F51CCDB0B8001AB135 /* Assets.xcassets in Resources */,
+				3DF51E521CE042A40036F635 /* ImageWindowController.xib in Resources */,
+				3DF51E571CE0433F0036F635 /* TextWindowController.xib in Resources */,
 				3D81D7F81CCDB0B8001AB135 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,9 +343,11 @@
 				3DCA58E41CCEEE3200DFE34E /* PageObject.m in Sources */,
 				3DCA58E11CCEC60900DFE34E /* FolderObject+CoreDataProperties.m in Sources */,
 				3D6FDEFF1CCDDC06000D6A12 /* HeaderView.m in Sources */,
+				3DF51E511CE042A40036F635 /* ImageWindowController.m in Sources */,
 				3D70D1A41CD6EB430063CA69 /* DragTableView.m in Sources */,
 				3D81D7ED1CCDB0B8001AB135 /* AppDelegate.m in Sources */,
 				3D81D7F31CCDB0B8001AB135 /* QuickList.xcdatamodeld in Sources */,
+				3DF51E561CE0433F0036F635 /* TextWindowController.m in Sources */,
 				3DCA58DE1CCEBB8D00DFE34E /* FolderObject.m in Sources */,
 				3DFA12E91CCDBB8800B8E25C /* DataMaster.m in Sources */,
 				3DFA12EC1CCDCE0A00B8E25C /* CustomTableCellView.m in Sources */,
