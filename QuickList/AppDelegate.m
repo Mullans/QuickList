@@ -11,7 +11,6 @@
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
-- (IBAction)saveAction:(id)sender;
 
 @end
 
@@ -21,12 +20,6 @@
     // Code for testing
     dataMaster = [[DataMaster alloc]initWithContext:self.managedObjectContext];
     
-//    FolderObject* folder1 = [dataMaster newFolderNamed:@"Folder1" inFolder:nil];
-//    FolderObject* folder1_1 = [dataMaster newFolderNamed:@"Folder1_1" inFolder:folder1];
-//    FolderObject* folder1_2 = [dataMaster newFolderNamed:@"Folder1_2" inFolder:folder1];
-//    FolderObject* folder2 = [dataMaster newFolderNamed:@"Folder2" inFolder:nil];
-//    FolderObject* folder2_1 = [dataMaster newFolderNamed:@"Folder2_1" inFolder:folder2];
-//    FolderObject* folder3 = [dataMaster newFolderNamed:@"Folder3" inFolder:nil];
     activeName = -1;
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* newPage = [[PageObject alloc] initWithArray:[DataMaster makeTableForView:_pagedView dataSource:self delegate:self]];
@@ -496,6 +489,51 @@
     currentTableContents = [dataMaster currentFolderContents];
     PageObject* currentPage = pages[depth];
     [currentPage reloadTable];
+}
+
+- (IBAction)exportSelectedItem:(id)sender {
+
+    PageObject* currentPage = pages[depth];
+    NSIndexSet* selected = currentPage.tableView.selectedRowIndexes;
+    NSString* folderName = @"QuickNote";
+    bool isFolder = YES;
+    if(selected.count==0){
+        return;
+    }else if(selected.count==1){
+        isFolder = NO;
+        FolderObject* selectedFolder = currentTableContents[currentPage.tableView.selectedRow];
+        folderName = selectedFolder.name;
+    }
+    CFStringRef newExtension = UTTypeCopyPreferredTagWithClass((CFStringRef)kUTTypeFolder, kUTTagClassFilenameExtension);
+    NSString* newName = [[folderName stringByDeletingPathExtension] stringByAppendingPathExtension:(__bridge NSString*)newExtension];
+    NSLog(@"%@ %@",newExtension, newName);
+    CFRelease(newExtension);
+    
+    NSSavePanel* panel = [NSSavePanel savePanel];
+    [panel setNameFieldStringValue:newName];
+    [panel beginSheetModalForWindow:_window completionHandler:^(NSInteger result){
+        if(result==NSFileHandlingPanelOKButton){
+            NSURL* newFile = [panel URL];
+            if(isFolder){
+                NSFileManager* manager = [NSFileManager defaultManager];
+                [manager createDirectoryAtURL:newFile withIntermediateDirectories:YES attributes:nil error:nil];
+                [selected enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop){
+                    FolderObject* currentFolder = currentTableContents[currentPage.tableView.selectedRow];
+                    NSURL* writeFile = [[panel URL] URLByAppendingPathComponent:currentFolder.name];
+                    NSURL* checkFile = writeFile.copy;
+                    int version = 1;
+                    while([manager fileExistsAtPath:checkFile.path]){
+                        version++;
+                        checkFile = [NSURL URLWithString:[newFile.path stringByAppendingString:[NSString stringWithFormat:@"%d",version]]];
+                    }
+                    [currentFolder.data writeToURL:checkFile atomically:YES];
+                }];
+            }else{
+                FolderObject* selectedFolder = currentTableContents[currentPage.tableView.selectedRow];
+                [selectedFolder.data writeToURL:newFile atomically:YES];
+            }
+        }
+    }];
 }
 
 #pragma mark - Core Data stack

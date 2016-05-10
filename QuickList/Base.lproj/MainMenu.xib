@@ -122,6 +122,12 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="MWh-t7-HX7"/>
+                            <menuItem title="Export Selected" keyEquivalent="s" id="Vig-1P-lWH" userLabel="New Group">
+                                <connections>
+                                    <action selector="exportSelectedItem:" target="Voe-Tx-rLC" id="DG8-dl-LMx"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="c9X-qv-Z0a"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
                                     <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
