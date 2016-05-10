@@ -16,13 +16,15 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    _textView.delegate = self;
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
--(void)textDidEndEditing:(NSNotification *)notification{
+-(void)setFolder:(FolderObject *)folder{
+    _folder = folder;
+    NSString *textString = [[NSString alloc] initWithData:_folder.data encoding:NSUTF16StringEncoding];
+    [_textView setString:textString];
+}
+- (IBAction)saveButton:(id)sender {
     self.folder.data = [_textView.string dataUsingEncoding:NSUTF16StringEncoding];
-    NSLog(@"%@",_textView.string);
-
+    [self close];
 }
 @end

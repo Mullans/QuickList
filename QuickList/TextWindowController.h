@@ -8,9 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import "FolderObject.h"
-@interface TextWindowController : NSWindowController <NSTextViewDelegate>
+@interface TextWindowController : NSWindowController
 
 @property (nonatomic) FolderObject* folder;
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
+- (IBAction)saveButton:(id)sender;
 
 @end

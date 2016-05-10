@@ -22,21 +22,44 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="brX-YB-AYP">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="30"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8K4-f5-pt3">
+                                <rect key="frame" x="343" y="-2" width="133" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="xFn-Ff-EQW"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Save and Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aZc-fv-gkq">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="saveButton:" target="-2" id="EBW-4d-agy"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="8K4-f5-pt3" firstAttribute="centerY" secondItem="brX-YB-AYP" secondAttribute="centerY" id="G8O-FC-aPC"/>
+                            <constraint firstAttribute="height" constant="30" id="cWR-Js-9sr"/>
+                            <constraint firstAttribute="trailing" secondItem="8K4-f5-pt3" secondAttribute="trailing" constant="10" id="fYo-EE-4OK"/>
+                        </constraints>
+                    </customView>
                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9d4-La-lLM">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="30" width="480" height="240"/>
                         <clipView key="contentView" id="hVu-0C-23Y">
-                            <rect key="frame" x="1" y="1" width="478" height="268"/>
+                            <rect key="frame" x="1" y="1" width="478" height="238"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="o6q-Mk-JCn">
-                                    <rect key="frame" x="0.0" y="0.0" width="478" height="268"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="478" height="238"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="478" height="268"/>
-                                    <size key="maxSize" width="478" height="10000000"/>
+                                    <size key="minSize" width="478" height="238"/>
+                                    <size key="maxSize" width="480" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="478" height="268"/>
-                                    <size key="maxSize" width="478" height="10000000"/>
+                                    <size key="minSize" width="478" height="238"/>
+                                    <size key="maxSize" width="480" height="10000000"/>
                                 </textView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -45,17 +68,21 @@
                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="pH4-36-YIS">
-                            <rect key="frame" x="463" y="1" width="16" height="268"/>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="pH4-36-YIS">
+                            <rect key="frame" x="463" y="1" width="16" height="238"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="9d4-La-lLM" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="4IC-ls-9YU"/>
-                    <constraint firstAttribute="bottom" secondItem="9d4-La-lLM" secondAttribute="bottom" id="XeL-1u-GeG"/>
-                    <constraint firstAttribute="trailing" secondItem="9d4-La-lLM" secondAttribute="trailing" id="l5V-Fx-vIz"/>
-                    <constraint firstItem="9d4-La-lLM" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="uOW-w6-vYu"/>
+                    <constraint firstItem="brX-YB-AYP" firstAttribute="top" secondItem="9d4-La-lLM" secondAttribute="bottom" id="1Je-4k-aFB"/>
+                    <constraint firstItem="9d4-La-lLM" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="9CZ-Ob-Vzw"/>
+                    <constraint firstAttribute="bottom" secondItem="brX-YB-AYP" secondAttribute="bottom" id="NAe-mG-Qjx"/>
+                    <constraint firstAttribute="trailing" secondItem="brX-YB-AYP" secondAttribute="trailing" id="Ymt-9k-5Ci"/>
+                    <constraint firstItem="brX-YB-AYP" firstAttribute="top" secondItem="9d4-La-lLM" secondAttribute="bottom" id="cWr-mQ-lOl"/>
+                    <constraint firstItem="brX-YB-AYP" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="dK0-q9-HOj"/>
+                    <constraint firstItem="9d4-La-lLM" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="h7A-Kd-3RC"/>
+                    <constraint firstAttribute="trailing" secondItem="9d4-La-lLM" secondAttribute="trailing" id="qSH-jz-AAy"/>
                 </constraints>
             </view>
             <connections>

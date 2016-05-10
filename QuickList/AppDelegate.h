@@ -13,7 +13,7 @@
 #import "NSMutableArray+Management.h"
 #import "ImageWindowController.h"
 #import "TextWindowController.h"
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate,NSTableViewDataSource>{
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate,NSTableViewDataSource,NSWindowDelegate>{
     NSMutableArray* tables;
     DataMaster* dataMaster;
     BOOL groupButton;

@@ -440,22 +440,20 @@
             }
         }else if(item.type==FOLocalURL||item.type==FOHTML){
             NSString *urlString = [[NSString alloc] initWithData:item.data encoding:NSUTF16StringEncoding];
-            //            NSLog(@"%@",urlString);
             NSURL *itemURL = [[NSURL alloc] initWithString:urlString];
             [[NSWorkspace sharedWorkspace] openURL:itemURL];
         }else if(item.type==FOTextFile) {
-            NSString *textString = [[NSString alloc] initWithData:item.data encoding:NSUTF16StringEncoding];
-//            NSLog(@"%@",textString);
             TextWindowController* newWindow = [[TextWindowController alloc]initWithWindowNibName:@"TextWindowController"];
             [newWindow showWindow:nil];
             newWindow.folder = item;
-            [newWindow.textView setString:textString];
+            newWindow.window.delegate = self;
             [subWindows addObject:newWindow];
         }else if(item.type==FOImage||item.type==FOPDF){
             ImageWindowController* newWindow = [[ImageWindowController alloc]initWithWindowNibName:@"ImageWindowController"];
             [newWindow showWindow:nil];
             [newWindow.imageView setImage:[[NSImage alloc]initWithData:item.data]];
             newWindow.window.title = item.name;
+            newWindow.window.delegate = self;
             [subWindows addObject:newWindow];
         }else{
             NSLog(@"error");
@@ -639,8 +637,19 @@
     PageObject* backPage = pages[depth];
     [backPage reloadTable];
     [self clearSelection];
+    
+    TextWindowController* newWindow = [[TextWindowController alloc]initWithWindowNibName:@"TextWindowController"];
+    [newWindow showWindow:nil];
+    newWindow.folder = newFolder;
+    newWindow.window.delegate = self;
+    [subWindows addObject:newWindow];
 }
 
+#pragma mark - NSWindowDelegate
+-(void)windowWillClose:(NSNotification *)notification{
+    NSWindow* window = notification.object;
+    [subWindows removeObject:window.windowController];
+}
 #pragma mark - Core Data stack
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
