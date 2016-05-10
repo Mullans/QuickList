@@ -261,17 +261,20 @@
 
 }
 #pragma mark - Table Buttons
+-(void)clearSelection{
+    [pages[depth] deselectAll];
+    if(groupButton){
+        [_rightHeaderButton setImage:[NSImage imageNamed:@"NSAddTemplate"]];
+        groupButton = FALSE;
+    }
+}
 -(void)tableButtonPressed:(id)sender{
     NSButton* senderButton = (NSButton*)sender;
     NSInteger senderIndex = [senderButton.identifier integerValue];
     [self nextPageWithIndex:senderIndex];
 }
 -(void)nextPageWithIndex:(NSInteger)index{
-    [pages[depth] deselectAll];
-    if(groupButton){
-        [_rightHeaderButton setImage:[NSImage imageNamed:@"NSAddTemplate"]];
-        groupButton = FALSE;
-    }
+    [self clearSelection];
     [dataMaster openFolder:(FolderObject*)currentTableContents[index]];
     if(depth+1>pages.count-1){
         //desired page isn't loaded, and nothing exists at that depth
@@ -304,6 +307,7 @@
     _headerLabel.stringValue = dataMaster.currentFolderName;
 }
 -(void)previousPage{
+    FolderObject* currentPage = dataMaster.currentFolder;
     if([dataMaster openParentFolder]){
         PageObject* backPage = pages[depth];
         NSView* animatedView = backPage.scrollView;
@@ -316,6 +320,9 @@
         depth--;
         //animate back
         _headerLabel.stringValue = dataMaster.currentFolderName;
+        PageObject* newPage = pages[depth];
+        [newPage reloadTable];
+        [newPage.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[currentTableContents indexOfObject:currentPage]] byExtendingSelection:NO];
     }
 }
 - (IBAction)backButtonPressed:(id)sender {
@@ -335,6 +342,7 @@
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* backPage = pages[depth];
     [backPage reloadTable];
+    [self clearSelection];
 }
 
 
@@ -345,6 +353,7 @@
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* backPage = pages[depth];
     [backPage reloadTable];
+    [self clearSelection];
 }
 
 - (IBAction)renameSelectedItem:(id)sender {
@@ -364,6 +373,7 @@
         [currentPage.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:currentPage.tableView.selectedRow] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
         [activeField becomeFirstResponder];
     }
+    [self clearSelection];
 }
 
 - (IBAction)goToParentItem:(id)sender {
@@ -383,7 +393,9 @@
         [folderAlert setIcon:[NSImage imageNamed:NSImageNameCaution]];
         [folderAlert addButtonWithTitle:@"OK"];
     }else{
-        [self nextPageWithIndex:currentPage.tableView.selectedRow];
+        if(((FolderObject*)currentTableContents[currentPage.tableView.selectedRow]).type==FODefault){
+            [self nextPageWithIndex:currentPage.tableView.selectedRow];
+        }
     }
 }
 
@@ -408,6 +420,7 @@
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* backPage = pages[depth];
     [backPage reloadTable];
+    [self clearSelection];
 }
 
 - (IBAction)openSelectedItem:(id)sender {
@@ -457,6 +470,7 @@
     }else if(folderToOpen>=0){
         [self nextPageWithIndex:folderToOpen];
     }
+    [self clearSelection];
 }
 
 
@@ -498,6 +512,7 @@
     currentTableContents = [dataMaster currentFolderContents];
     PageObject* currentPage = pages[depth];
     [currentPage reloadTable];
+    [self clearSelection];
 }
 
 - (IBAction)exportSelectedItem:(id)sender {
@@ -593,6 +608,7 @@
             }
         }
     }];
+    [self clearSelection];
 }
 -(NSString*)getItemName{
     NSAlert* folderAlert = [[NSAlert alloc]init];
@@ -622,6 +638,7 @@
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* backPage = pages[depth];
     [backPage reloadTable];
+    [self clearSelection];
 }
 
 #pragma mark - Core Data stack

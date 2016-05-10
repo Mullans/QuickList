@@ -82,23 +82,6 @@
                                     <action selector="openSelectedItem:" target="Voe-Tx-rLC" id="ZDn-kO-1s4"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Rename Selected" id="v8U-5N-9jv">
-                                <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="renameSelectedItem:" target="Voe-Tx-rLC" id="8Xf-HC-bla"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Delete Selected" id="t16-sZ-6zc">
-                                <string key="keyEquivalent" base64-UTF8="YES">
-CA
-</string>
-                                <connections>
-                                    <action selector="deleteSelectedItem:" target="Voe-Tx-rLC" id="2f8-f0-00W"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="Qsc-vm-U8c"/>
                             <menuItem title="Go To Parent Folder" keyEquivalent="" id="NTS-11-T3b">
                                 <connections>
@@ -116,12 +99,6 @@ CA
                                     <action selector="newGroupItem:" target="Voe-Tx-rLC" id="XuF-0l-Svp"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Move Selected To Parent Folder" keyEquivalent="" id="TUV-SF-VeZ">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
-                                <connections>
-                                    <action selector="moveSelectedUpItem:" target="Voe-Tx-rLC" id="yK0-g6-bFo"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Group Selected" keyEquivalent="g" id="U61-u8-PKA">
                                 <connections>
                                     <action selector="groupSelectedItem:" target="Voe-Tx-rLC" id="wRt-cu-b4i"/>
@@ -137,6 +114,37 @@ CA
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
                                     <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Edit" id="Fuu-Qx-PT2" userLabel="Edit">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Edit" id="d9A-1O-dlb">
+                        <items>
+                            <menuItem title="Rename Selected" id="v8U-5N-9jv">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="renameSelectedItem:" target="Voe-Tx-rLC" id="8Xf-HC-bla"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Delete Selected" id="t16-sZ-6zc">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                <connections>
+                                    <action selector="deleteSelectedItem:" target="Voe-Tx-rLC" id="2f8-f0-00W"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Qai-Uw-SgG"/>
+                            <menuItem title="Move Selected To Parent Folder" keyEquivalent="" id="TUV-SF-VeZ">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="moveSelectedUpItem:" target="Voe-Tx-rLC" id="yK0-g6-bFo"/>
                                 </connections>
                             </menuItem>
                         </items>
