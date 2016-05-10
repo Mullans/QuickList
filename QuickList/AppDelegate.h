@@ -48,5 +48,6 @@
 - (IBAction)openSelectedItem:(id)sender;
 - (IBAction)deleteSelectedItem:(id)sender;
 - (IBAction)exportSelectedItem:(id)sender;
+- (IBAction)newTextItemItem:(id)sender;
 @end
 

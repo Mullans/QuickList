@@ -594,6 +594,35 @@
         }
     }];
 }
+-(NSString*)getItemName{
+    NSAlert* folderAlert = [[NSAlert alloc]init];
+    [folderAlert setMessageText:@"What is the title of the new text item?"];
+    [folderAlert setIcon:[NSImage imageNamed:NSImageNameFolder]];
+    [folderAlert addButtonWithTitle:@"OK"];
+    [folderAlert addButtonWithTitle:@"Cancel"];
+    NSTextField* input = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,200,24)];
+    [folderAlert setAccessoryView:input];
+    NSInteger response = [folderAlert runModal];
+    if(response==NSAlertFirstButtonReturn){
+        if([input.stringValue isEqualToString:@""]){
+            return @"Untitled Text";
+        }
+        return input.stringValue;
+    }else if(response==NSAlertSecondButtonReturn){
+        return @"Untitled Text";
+    }else{
+        NSLog(@"Folder alert error");
+        return @"Untitled Text";
+    }
+}
+- (IBAction)newTextItemItem:(id)sender {
+    NSString* newFolderName = [self getItemName];
+    FolderObject* newFolder = [dataMaster newFolderNamed:newFolderName inFolder:nil];
+    newFolder.type = FOTextFile;
+    currentTableContents = dataMaster.currentFolderContents;
+    PageObject* backPage = pages[depth];
+    [backPage reloadTable];
+}
 
 #pragma mark - Core Data stack
 

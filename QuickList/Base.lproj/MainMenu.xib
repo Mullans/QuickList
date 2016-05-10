@@ -71,17 +71,18 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="File" id="bib-Uj-vzu">
                         <items>
-                            <menuItem title="New Group" keyEquivalent="n" id="Was-JA-tGl" userLabel="New Group">
+                            <menuItem title="New Text Item" keyEquivalent="n" id="Hkg-Mg-m8O">
                                 <connections>
-                                    <action selector="newGroupItem:" target="Voe-Tx-rLC" id="XuF-0l-Svp"/>
+                                    <action selector="newTextItemItem:" target="Voe-Tx-rLC" id="yVy-5w-g6g"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Open Selected" keyEquivalent="o" id="z8q-8I-tX4" userLabel="New Group">
+                            <menuItem isSeparatorItem="YES" id="zQA-A6-ajh"/>
+                            <menuItem title="Open Selected" keyEquivalent="o" id="z8q-8I-tX4">
                                 <connections>
                                     <action selector="openSelectedItem:" target="Voe-Tx-rLC" id="ZDn-kO-1s4"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Rename Selected" id="v8U-5N-9jv" userLabel="New Group">
+                            <menuItem title="Rename Selected" id="v8U-5N-9jv">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
@@ -90,7 +91,7 @@ DQ
                                     <action selector="renameSelectedItem:" target="Voe-Tx-rLC" id="8Xf-HC-bla"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Delete Selected" id="t16-sZ-6zc" userLabel="New Group">
+                            <menuItem title="Delete Selected" id="t16-sZ-6zc">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
@@ -99,30 +100,35 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Qsc-vm-U8c"/>
-                            <menuItem title="Go To Parent Folder" keyEquivalent="" id="NTS-11-T3b" userLabel="New Group">
+                            <menuItem title="Go To Parent Folder" keyEquivalent="" id="NTS-11-T3b">
                                 <connections>
                                     <action selector="goToParentItem:" target="Voe-Tx-rLC" id="wcR-Cm-kyL"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Go To Selected Folder" keyEquivalent="" id="evj-0e-70e" userLabel="New Group">
+                            <menuItem title="Go To Selected Folder" keyEquivalent="" id="evj-0e-70e">
                                 <connections>
                                     <action selector="goToSelectedItem:" target="Voe-Tx-rLC" id="gsT-aa-byx"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                            <menuItem title="Move Selected To Parent Folder" keyEquivalent="" id="TUV-SF-VeZ" userLabel="New Group">
+                            <menuItem title="New Group" keyEquivalent="N" id="Was-JA-tGl" userLabel="New Group">
+                                <connections>
+                                    <action selector="newGroupItem:" target="Voe-Tx-rLC" id="XuF-0l-Svp"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Move Selected To Parent Folder" keyEquivalent="" id="TUV-SF-VeZ">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                 <connections>
                                     <action selector="moveSelectedUpItem:" target="Voe-Tx-rLC" id="yK0-g6-bFo"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Group Selected" keyEquivalent="g" id="U61-u8-PKA" userLabel="New Group">
+                            <menuItem title="Group Selected" keyEquivalent="g" id="U61-u8-PKA">
                                 <connections>
                                     <action selector="groupSelectedItem:" target="Voe-Tx-rLC" id="wRt-cu-b4i"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="MWh-t7-HX7"/>
-                            <menuItem title="Export Selected" keyEquivalent="S" id="Vig-1P-lWH" userLabel="New Group">
+                            <menuItem title="Export Selected" keyEquivalent="S" id="Vig-1P-lWH">
                                 <connections>
                                     <action selector="exportSelectedItem:" target="Voe-Tx-rLC" id="DG8-dl-LMx"/>
                                 </connections>
