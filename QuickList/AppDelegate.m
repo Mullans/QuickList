@@ -197,7 +197,9 @@
                 if(newFolder.name==nil){
                     newFolder.name = @"Untitled URL";
                 }
-                newFolder.data = [itemString dataUsingEncoding:NSUTF16StringEncoding];
+                NSString* dataString = [NSString stringWithFormat:@"%@%@%@",@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n<key>URL</key>\n<string>",itemString,@"</string>\n</dict>\n</plist>"];
+
+                newFolder.data = [dataString dataUsingEncoding:NSUTF16StringEncoding];
             }else{
                 newFolder.type = FOTextFile;
                 newFolder.name = [itemString substringToIndex:MIN(itemString.length,11)];
@@ -496,6 +498,7 @@
     PageObject* currentPage = pages[depth];
     NSIndexSet* selected = currentPage.tableView.selectedRowIndexes;
     NSString* folderName = @"QuickNote";
+    NSString* extension = @"";
     bool isFolder = YES;
     if(selected.count==0){
         return;
@@ -503,11 +506,30 @@
         isFolder = NO;
         FolderObject* selectedFolder = currentTableContents[currentPage.tableView.selectedRow];
         folderName = selectedFolder.name;
+        switch (selectedFolder.type) {
+            case FOHTML:
+                extension = @"webloc";
+                break;
+            case FOLocalURL:
+                return;
+                break;
+            case FOTextFile:
+                extension = @"txt";
+                break;
+            case FOImage:
+                extension = @"png";
+                break;
+            case FOPDF:
+                extension = @"pdf";
+                break;
+            default:
+                return;
+        }
     }
-    CFStringRef newExtension = UTTypeCopyPreferredTagWithClass((CFStringRef)kUTTypeFolder, kUTTagClassFilenameExtension);
-    NSString* newName = [[folderName stringByDeletingPathExtension] stringByAppendingPathExtension:(__bridge NSString*)newExtension];
-    NSLog(@"%@ %@",newExtension, newName);
-    CFRelease(newExtension);
+//    CFStringRef newExtension = UTTypeCopyPreferredTagWithClass((CFStringRef)itemType, kUTTagClassFilenameExtension);
+    NSString* newName = [[folderName stringByDeletingPathExtension] stringByAppendingPathExtension:extension];
+//    NSLog(@"%@ %@",newExtension, newName);
+//    CFRelease(newExtension);
     
     NSSavePanel* panel = [NSSavePanel savePanel];
     [panel setNameFieldStringValue:newName];
@@ -519,7 +541,28 @@
                 [manager createDirectoryAtURL:newFile withIntermediateDirectories:YES attributes:nil error:nil];
                 [selected enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop){
                     FolderObject* currentFolder = currentTableContents[currentPage.tableView.selectedRow];
+                    NSString* fileExtension = @"";
+                    switch (currentFolder.type) {
+                        case FOHTML:
+                            fileExtension = @"webloc";
+                            break;
+                        case FOLocalURL:
+                            return;
+                            break;
+                        case FOTextFile:
+                            fileExtension = @"txt";
+                            break;
+                        case FOImage:
+                            fileExtension = @"png";
+                            break;
+                        case FOPDF:
+                            fileExtension = @"pdf";
+                            break;
+                        default:
+                            return;
+                    }
                     NSURL* writeFile = [[panel URL] URLByAppendingPathComponent:currentFolder.name];
+                    [writeFile URLByAppendingPathExtension:fileExtension];
                     NSURL* checkFile = writeFile.copy;
                     int version = 1;
                     while([manager fileExistsAtPath:checkFile.path]){
