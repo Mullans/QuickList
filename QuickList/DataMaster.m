@@ -141,6 +141,7 @@
     newFolder.importance = 5;
     newFolder.parentFolder = parentFolder;
     [parentFolder addSubfoldersObject:newFolder];
+    [self save];
     return newFolder;
 }
 -(NSInteger)currentFolderSize{
@@ -148,7 +149,9 @@
     return [_currentFolder.subfolders count];
 }
 -(NSArray *)currentFolderContents{
-    return [_currentFolder.subfolders allObjects];
+    NSArray* ret = [_currentFolder.subfolders allObjects];
+    NSSortDescriptor* sorter = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    return [ret sortedArrayUsingDescriptors:@[sorter]];
 }
 -(NSString *)currentFolderName{
     return _currentFolder.name;
@@ -168,6 +171,7 @@
         [context deleteObject:subItem];
 //        NSLog(@"deleted object: %@",subItem.name);
     }
+    [self save];
 }
 -(NSMutableArray*)addItemToDelete:(FolderObject*)item fromArray:(NSMutableArray*)array{
     [array addObject:item];
@@ -175,5 +179,8 @@
         [self addItemToDelete:subItem fromArray:array];
     }
     return array;
+}
+-(void)save{
+    [context save:nil];
 }
 @end

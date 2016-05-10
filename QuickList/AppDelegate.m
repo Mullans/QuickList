@@ -112,7 +112,11 @@
     textField.editable = NO;
     FolderObject* currentFolder = currentTableContents[activeName];
     currentFolder.name = textField.stringValue;
+    [dataMaster save];
     activeName = -1;
+    PageObject* currentPage = pages[depth];
+    currentTableContents = dataMaster.currentFolderContents;
+    [currentPage reloadTable];
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
     return dataMaster.currentFolderSize;
@@ -189,7 +193,7 @@
                 NSString * end = @"</title>";
                 NSRange range2 = [htmlCode rangeOfString:end];
                 if(range1.location==NSNotFound||range2.location==NSNotFound){
-                    newFolder.name = ((NSURL*)itemString).host;
+                    newFolder.name = [NSURL URLWithString:itemString].host;
                 }else{
                     NSString * subString = [htmlCode substringWithRange:NSMakeRange(range1.location + 7, range2.location - range1.location - 7)];
                     newFolder.name = subString;
@@ -197,9 +201,10 @@
                 if(newFolder.name==nil){
                     newFolder.name = @"Untitled URL";
                 }
-                NSString* dataString = [NSString stringWithFormat:@"%@%@%@",@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n<key>URL</key>\n<string>",itemString,@"</string>\n</dict>\n</plist>"];
 
-                newFolder.data = [dataString dataUsingEncoding:NSUTF16StringEncoding];
+                newFolder.data = [itemString dataUsingEncoding:NSUTF16StringEncoding];
+                NSLog(@"%@",newFolder.name);
+                NSLog(@"  ");
             }else{
                 newFolder.type = FOTextFile;
                 newFolder.name = [itemString substringToIndex:MIN(itemString.length,11)];
@@ -420,9 +425,9 @@
             }else{
                 folderToOpen = -2;
             }
-        }else if(item.type==FOHTML||item.type==FOLocalURL){
+        }else if(item.type==FOLocalURL||item.type==FOHTML){
             NSString *urlString = [[NSString alloc] initWithData:item.data encoding:NSUTF16StringEncoding];
-//            NSLog(@"%@",urlString);
+            //            NSLog(@"%@",urlString);
             NSURL *itemURL = [[NSURL alloc] initWithString:urlString];
             [[NSWorkspace sharedWorkspace] openURL:itemURL];
         }else if(item.type==FOTextFile) {
@@ -439,6 +444,8 @@
             [newWindow.imageView setImage:[[NSImage alloc]initWithData:item.data]];
             newWindow.window.title = item.name;
             [subWindows addObject:newWindow];
+        }else{
+            NSLog(@"error");
         }
         
     }
@@ -468,7 +475,7 @@
             FolderObject* currentFolder = currentTableContents[idx];
             if(currentFolder.type==FODefault){
                 NSAlert* folderAlert2 = [[NSAlert alloc]init];
-                [folderAlert2 setMessageText:@"Are You Sure You Want To Delete The Selected Folder and All SubFolders?"];
+                [folderAlert2 setMessageText:[NSString stringWithFormat:@"Are You Sure You Want To Delete Folder %@ and All SubFolders?",currentFolder.name]];
                 [folderAlert2 setIcon:[NSImage imageNamed:NSImageNameCaution]];
                 [folderAlert2 addButtonWithTitle:@"OK"];
                 [folderAlert2 addButtonWithTitle:@"Cancel"];
@@ -500,16 +507,23 @@
     NSString* folderName = @"QuickNote";
     NSString* extension = @"";
     bool isFolder = YES;
+    NSData* selectedData;
     if(selected.count==0){
         return;
     }else if(selected.count==1){
         isFolder = NO;
         FolderObject* selectedFolder = currentTableContents[currentPage.tableView.selectedRow];
+        selectedData = selectedFolder.data;
         folderName = selectedFolder.name;
         switch (selectedFolder.type) {
             case FOHTML:
+            {
                 extension = @"webloc";
+                NSString *dataString = [[NSString alloc] initWithData:selectedFolder.data encoding:NSUTF16StringEncoding];
+                dataString = [NSString stringWithFormat:@"%@%@%@",@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n<key>URL</key>\n<string>",dataString,@"</string>\n</dict>\n</plist>"];
+                selectedData = [dataString dataUsingEncoding:NSUTF16StringEncoding];
                 break;
+            }
             case FOLocalURL:
                 return;
                 break;
@@ -526,10 +540,7 @@
                 return;
         }
     }
-//    CFStringRef newExtension = UTTypeCopyPreferredTagWithClass((CFStringRef)itemType, kUTTagClassFilenameExtension);
     NSString* newName = [[folderName stringByDeletingPathExtension] stringByAppendingPathExtension:extension];
-//    NSLog(@"%@ %@",newExtension, newName);
-//    CFRelease(newExtension);
     
     NSSavePanel* panel = [NSSavePanel savePanel];
     [panel setNameFieldStringValue:newName];
@@ -542,10 +553,16 @@
                 [selected enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop){
                     FolderObject* currentFolder = currentTableContents[currentPage.tableView.selectedRow];
                     NSString* fileExtension = @"";
+                    NSData* outputData = currentFolder.data;
                     switch (currentFolder.type) {
                         case FOHTML:
+                        {
                             fileExtension = @"webloc";
+                            NSString *dataString = [[NSString alloc] initWithData:currentFolder.data encoding:NSUTF16StringEncoding];
+                            dataString = [NSString stringWithFormat:@"%@%@%@",@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n<key>URL</key>\n<string>",dataString,@"</string>\n</dict>\n</plist>"];
+                            outputData = [dataString dataUsingEncoding:NSUTF16StringEncoding];
                             break;
+                        }
                         case FOLocalURL:
                             return;
                             break;
@@ -569,11 +586,10 @@
                         version++;
                         checkFile = [NSURL URLWithString:[newFile.path stringByAppendingString:[NSString stringWithFormat:@"%d",version]]];
                     }
-                    [currentFolder.data writeToURL:checkFile atomically:YES];
+                    [outputData writeToURL:checkFile atomically:YES];
                 }];
             }else{
-                FolderObject* selectedFolder = currentTableContents[currentPage.tableView.selectedRow];
-                [selectedFolder.data writeToURL:newFile atomically:YES];
+                [selectedData writeToURL:newFile atomically:YES];
             }
         }
     }];

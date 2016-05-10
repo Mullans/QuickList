@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, FOFolderType) {
 -(void)addNewTable:(NSTableView*)table scroll:(NSScrollView*)scrollView;
 -(void)removeTableAtIndex:(NSInteger)index;
 -(void)deleteItem:(FolderObject*)item;
+-(void)save;
 /**
  *  Returns NSArray for the given index
  *
