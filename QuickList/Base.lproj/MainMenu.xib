@@ -94,12 +94,12 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                            <menuItem title="New Group" keyEquivalent="N" id="Was-JA-tGl" userLabel="New Group">
+                            <menuItem title="New Group" keyEquivalent="g" id="Was-JA-tGl" userLabel="New Group">
                                 <connections>
                                     <action selector="newGroupItem:" target="Voe-Tx-rLC" id="XuF-0l-Svp"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Group Selected" keyEquivalent="g" id="U61-u8-PKA">
+                            <menuItem title="Group Selected" state="on" keyEquivalent="G" id="U61-u8-PKA">
                                 <connections>
                                     <action selector="groupSelectedItem:" target="Voe-Tx-rLC" id="wRt-cu-b4i"/>
                                 </connections>

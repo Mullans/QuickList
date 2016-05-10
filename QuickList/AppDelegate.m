@@ -246,14 +246,17 @@
         //            NSLog(@"%@",textString);
         TextWindowController* newWindow = [[TextWindowController alloc]initWithWindowNibName:@"TextWindowController"];
         [newWindow showWindow:nil];
+        newWindow.window.title = clickedFolder.name;
         newWindow.folder = clickedFolder;
         [newWindow.textView setString:textString];
+        [newWindow.window setFrameTopLeftPoint:(CGPoint){self.window.frame.origin.x,self.window.frame.origin.y+self.window.frame.size.height-20}];
         [subWindows addObject:newWindow];
     }else if(clickedFolder.type==FOImage||clickedFolder.type==FOPDF){
         ImageWindowController* newWindow = [[ImageWindowController alloc]initWithWindowNibName:@"ImageWindowController"];
         [newWindow showWindow:nil];
         [newWindow.imageView setImage:[[NSImage alloc]initWithData:clickedFolder.data]];
         newWindow.window.title = clickedFolder.name;
+        [newWindow.window setFrameTopLeftPoint:(CGPoint){self.window.frame.origin.x,self.window.frame.origin.y+self.window.frame.size.height-20}];
         [subWindows addObject:newWindow];
     }else if(clickedFolder.type==FODefault){
         [self nextPageWithIndex:row];
@@ -446,12 +449,15 @@
             TextWindowController* newWindow = [[TextWindowController alloc]initWithWindowNibName:@"TextWindowController"];
             [newWindow showWindow:nil];
             newWindow.folder = item;
+            newWindow.window.title = item.name;
+            [newWindow.window setFrameTopLeftPoint:(CGPoint){self.window.frame.origin.x,self.window.frame.origin.y+self.window.frame.size.height-20}];
             newWindow.window.delegate = self;
             [subWindows addObject:newWindow];
         }else if(item.type==FOImage||item.type==FOPDF){
             ImageWindowController* newWindow = [[ImageWindowController alloc]initWithWindowNibName:@"ImageWindowController"];
             [newWindow showWindow:nil];
             [newWindow.imageView setImage:[[NSImage alloc]initWithData:item.data]];
+            [newWindow.window setFrameTopLeftPoint:(CGPoint){self.window.frame.origin.x,self.window.frame.origin.y+self.window.frame.size.height-20}];
             newWindow.window.title = item.name;
             newWindow.window.delegate = self;
             [subWindows addObject:newWindow];
@@ -640,6 +646,8 @@
     
     TextWindowController* newWindow = [[TextWindowController alloc]initWithWindowNibName:@"TextWindowController"];
     [newWindow showWindow:nil];
+    [newWindow.window setFrameTopLeftPoint:(CGPoint){self.window.frame.origin.x,self.window.frame.origin.y+self.window.frame.size.height-20}];
+    newWindow.window.title = newFolder.name;
     newWindow.folder = newFolder;
     newWindow.window.delegate = self;
     [subWindows addObject:newWindow];
