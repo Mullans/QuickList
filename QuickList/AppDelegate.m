@@ -26,7 +26,6 @@
     newPage.folder = dataMaster.currentFolder;
     pages = [NSMutableArray arrayWithObject:newPage];
     [_pagedView addSubview:newPage.scrollView];
-    [newPage.tableView registerForDraggedTypes:[NSArray arrayWithObjects:NSPasteboardTypeHTML,NSPasteboardTypePNG,NSPasteboardTypeString,NSURLPboardType, nil]];
     depth = 0;
     subWindows = [[NSMutableArray alloc]initWithCapacity:1];
     _headerLabel.stringValue = dataMaster.currentFolderName;
@@ -148,10 +147,10 @@
         }
         return input.stringValue;
     }else if(response==NSAlertSecondButtonReturn){
-        return @"Untitled Group";
+        return nil;
     }else{
         NSLog(@"Folder alert error");
-        return @"Untitled Group";
+        return nil;
     }
 }
 -(BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation{
@@ -159,6 +158,9 @@
 //    NSLog(@"%ld -- %lu",(long)row,(unsigned long)dropOperation);
     if(dropOperation==NSTableViewDropOn){
         NSString* folderName = [self getFolderName];
+        if(folderName==nil){
+            return false;
+        }
         FolderObject* groupFolder = [dataMaster newFolderNamed:folderName inFolder:nil];
         [groupFolder setParentFolder:dataMaster.currentFolder.parentFolder];
         [dataMaster.currentFolder setParentFolder:groupFolder];
@@ -307,6 +309,7 @@
         context.duration = .4;
         [animatedView.animator setFrameOrigin:_pagedView.frame.origin];
     }completionHandler:nil];
+    [tempView.tableView becomeFirstResponder];
     _headerLabel.stringValue = dataMaster.currentFolderName;
 }
 -(void)previousPage{
@@ -325,6 +328,7 @@
         _headerLabel.stringValue = dataMaster.currentFolderName;
         PageObject* newPage = pages[depth];
         [newPage reloadTable];
+        [newPage.tableView becomeFirstResponder];
         [newPage.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[currentTableContents indexOfObject:currentPage]] byExtendingSelection:NO];
     }
 }
@@ -334,6 +338,9 @@
 
 - (IBAction)rightHeaderButtonPressed:(id)sender {
     NSString* newFolderName = [self getFolderName];
+    if(newFolderName==nil){
+        return;
+    }
     FolderObject* newFolder = [dataMaster newFolderNamed:newFolderName inFolder:nil];
     if(groupButton){
         PageObject* currentPage = pages[depth];
@@ -352,6 +359,9 @@
 #pragma mark MenuItems
 - (IBAction)newGroupItem:(id)sender {
     NSString* newFolderName = [self getFolderName];
+    if(newFolderName==nil){
+        return;
+    }
     [dataMaster newFolderNamed:newFolderName inFolder:nil];
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* backPage = pages[depth];
@@ -413,9 +423,20 @@
 }
 
 - (IBAction)groupSelectedItem:(id)sender {
-    NSString* newFolderName = [self getFolderName];
-    FolderObject* newFolder = [dataMaster newFolderNamed:newFolderName inFolder:nil];
     PageObject* currentPage = pages[depth];
+    if(currentPage.tableView.selectedRowIndexes.count<=0){
+        NSAlert* folderAlert = [[NSAlert alloc]init];
+        [folderAlert setMessageText:@"No Items Selected."];
+        [folderAlert setIcon:[NSImage imageNamed:NSImageNameCaution]];
+        [folderAlert addButtonWithTitle:@"OK"];
+        [folderAlert runModal];
+        return;
+    }
+    NSString* newFolderName = [self getFolderName];
+    if(newFolderName==nil){
+        return;
+    }
+    FolderObject* newFolder = [dataMaster newFolderNamed:newFolderName inFolder:nil];
     [currentPage.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         FolderObject* item = currentTableContents[idx];
         item.parentFolder = newFolder;
@@ -486,14 +507,13 @@
     [folderAlert addButtonWithTitle:@"Cancel"];
     NSInteger response =[folderAlert runModal];
     if(response==NSAlertFirstButtonReturn){
-        NSMutableArray* selectedItems = [[NSMutableArray alloc]init];
         PageObject* currentPage = pages[depth];
         
         [currentPage.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
             FolderObject* currentFolder = currentTableContents[idx];
             if(currentFolder.type==FODefault){
                 NSAlert* folderAlert2 = [[NSAlert alloc]init];
-                [folderAlert2 setMessageText:[NSString stringWithFormat:@"Are You Sure You Want To Delete Folder %@ and All SubFolders?",currentFolder.name]];
+                [folderAlert2 setMessageText:[NSString stringWithFormat:@"Are You Sure You Want To Delete Folder: \n%@",currentFolder.name]];
                 [folderAlert2 setIcon:[NSImage imageNamed:NSImageNameCaution]];
                 [folderAlert2 addButtonWithTitle:@"OK"];
                 [folderAlert2 addButtonWithTitle:@"Cancel"];
@@ -617,7 +637,7 @@
 -(NSString*)getItemName{
     NSAlert* folderAlert = [[NSAlert alloc]init];
     [folderAlert setMessageText:@"What is the title of the new text item?"];
-    [folderAlert setIcon:[NSImage imageNamed:NSImageNameFolder]];
+    [folderAlert setIcon:[NSImage imageNamed:@"text2"]];
     [folderAlert addButtonWithTitle:@"OK"];
     [folderAlert addButtonWithTitle:@"Cancel"];
     NSTextField* input = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,200,24)];
@@ -629,14 +649,17 @@
         }
         return input.stringValue;
     }else if(response==NSAlertSecondButtonReturn){
-        return @"Untitled Text";
+        return nil;
     }else{
         NSLog(@"Folder alert error");
-        return @"Untitled Text";
+        return nil;
     }
 }
 - (IBAction)newTextItemItem:(id)sender {
     NSString* newFolderName = [self getItemName];
+    if(newFolderName==nil){
+        return;
+    }
     FolderObject* newFolder = [dataMaster newFolderNamed:newFolderName inFolder:nil];
     newFolder.type = FOTextFile;
     currentTableContents = dataMaster.currentFolderContents;

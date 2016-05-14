@@ -99,7 +99,7 @@
                                     <action selector="newGroupItem:" target="Voe-Tx-rLC" id="XuF-0l-Svp"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Group Selected" state="on" keyEquivalent="G" id="U61-u8-PKA">
+                            <menuItem title="Group Selected" keyEquivalent="G" id="U61-u8-PKA">
                                 <connections>
                                     <action selector="groupSelectedItem:" target="Voe-Tx-rLC" id="wRt-cu-b4i"/>
                                 </connections>
