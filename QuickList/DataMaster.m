@@ -9,8 +9,8 @@
 
 @implementation DataMaster
 +(NSArray*)makeTableForView:(NSView* _Nonnull)view dataSource:(id<NSTableViewDataSource> _Nullable)dataSource delegate:(id<NSTableViewDelegate> _Nullable)delegate{
-    NSScrollView *tableContainer = [[NSScrollView alloc]initWithFrame:view.frame];
-    NSTableView *tableView = [[NSTableView alloc] initWithFrame:view.frame];
+    CustomScrollView *tableContainer = [[CustomScrollView alloc]initWithFrame:view.frame];
+    CustomTableView *tableView = [[CustomTableView alloc] initWithFrame:view.frame];
     NSTableColumn* column1 = [[NSTableColumn alloc]initWithIdentifier:@"Column1"];
     [column1 setWidth:tableView.frame.size.width];
     [tableView addTableColumn:column1];
@@ -34,50 +34,14 @@
 }
 -(NSArray*)makeTableForView:(NSView* _Nonnull)view dataSource:(id<NSTableViewDataSource> _Nullable)dataSource delegate:(id<NSTableViewDelegate> _Nullable)delegate withData:(nonnull NSArray*)data{
     NSArray *returnArray = [DataMaster makeTableForView:view dataSource:dataSource delegate:delegate];
-    [tables addObject:returnArray[1]];
-    [scrollViews addObject:returnArray[0]];
+
     [_data addObject:data];
     return returnArray;
 }
--(instancetype)init{
-    tables = [[NSMutableArray alloc]initWithCapacity:5];
-    scrollViews = [[NSMutableArray alloc]initWithCapacity:5];
-    _data = [[NSMutableArray alloc]initWithCapacity:5];
-    return self;
-}
--(NSInteger)tableCount{
-    return tables.count;
-}
--(void)addNewTable:(NSTableView *)table scroll:(NSScrollView *)scrollView{
-    [tables addObject:table];
-    [scrollViews addObject:scrollView];
-}
--(void)removeTableAtIndex:(NSInteger)index{
-    [tables removeObjectAtIndex:index];
-    [scrollViews removeObjectAtIndex:index];
-}
--(NSArray *)getTableAtIndex:(NSInteger)index{
-    return @[[scrollViews objectAtIndex:index],[tables objectAtIndex:index]];
-}
--(NSObject *)getDataFromTable:(NSInteger)tableIndex atIndex:(NSInteger)index{
-    return tables[tableIndex][index];
-}
--(NSArray*)getDataForTable:(NSTableView*)table{
-    NSInteger index = [tables indexOfObject:table];
-    if(index!=NSNotFound){
-        return _data[index];
-    }else{
-        return nil;
-    }
-}
-#pragma mark - Pasteboard Methods
 
 
 #pragma mark - CoreData Methods
 -(instancetype)initWithContext:(NSManagedObjectContext*)managedContext{
-    tables = [[NSMutableArray alloc]initWithCapacity:5];
-    scrollViews = [[NSMutableArray alloc]initWithCapacity:5];
-    _data = [[NSMutableArray alloc]initWithCapacity:5];
     context = managedContext;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
     NSEntityDescription* entity = [NSEntityDescription entityForName:@"FolderObject" inManagedObjectContext:context];
@@ -96,13 +60,13 @@
         _currentFolder.dateAdded = [[NSDate date] timeIntervalSince1970];
         _currentFolder.dateChanged = [[NSDate date]timeIntervalSince1970];
         _currentFolder.importance = 0;
-        _currentFolder.name = @"RootFolder";
+        _currentFolder.name = @"Main Folder";
     }else if(fetchedObjects.count>1){
-        NSLog(@"Error: Multiple RootFolders found");
+        NSLog(@"Error: Multiple Main Folders found");
         _currentFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];
         _currentFolder.type = FORoot;
         _currentFolder.parentFolder = nil;
-        _currentFolder.name = @"RootFolder";
+        _currentFolder.name = @"Main Folder";
         _currentFolder.dateAdded = [[NSDate date] timeIntervalSince1970];
         _currentFolder.dateChanged = [[NSDate date]timeIntervalSince1970];
         _currentFolder.importance = 0;

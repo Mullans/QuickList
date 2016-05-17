@@ -227,7 +227,8 @@
 //                NSLog(@"  ");
             }else{
                 newFolder.type = FOTextFile;
-                newFolder.name = [itemString substringToIndex:MIN(itemString.length,11)];
+                //TODO: implement smart cutoff
+                newFolder.name = [itemString substringToIndex:MIN(itemString.length,20)];
                 newFolder.data = [itemString dataUsingEncoding:NSUTF16StringEncoding];
             }
         }else if([object isKindOfClass:[NSURL class]]){

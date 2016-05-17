@@ -10,6 +10,8 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 #import "FolderObject.h"
+#import "CustomScrollView.h"
+#import "CustomTableView.h"
 NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, FOFolderType) {
     FORoot,
@@ -22,30 +24,17 @@ typedef NS_ENUM(NSInteger, FOFolderType) {
 };
 
 @interface DataMaster : NSObject{
-    NSMutableArray* scrollViews;
-    NSMutableArray* tables;
+
     NSManagedObjectContext* context;
 }
 
 @property (nonatomic,readonly) NSMutableArray* data;
-@property (nonatomic,readonly) NSInteger tableCount;
 @property (nonatomic, readonly) NSInteger currentFolderSize;
 @property (nonatomic, readonly) NSArray* currentFolderContents;
 @property (nonatomic) NSString* currentFolderName;
 @property (nonatomic, readonly) FolderObject* currentFolder;
--(void)addNewTable:(NSTableView*)table scroll:(NSScrollView*)scrollView;
--(void)removeTableAtIndex:(NSInteger)index;
 -(void)deleteItem:(FolderObject*)item;
 -(void)save;
-/**
- *  Returns NSArray for the given index
- *
- *  @param index NSInteger for the desired data
- *
- *  @return NSArray: first object is the NSScrollView that holds the table, second object is the NSTableView
- */
--(NSArray*)getTableAtIndex:(NSInteger)index;
--(NSArray*)getDataForTable:(NSTableView*)table;
 NS_ASSUME_NONNULL_END
 
 /**

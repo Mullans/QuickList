@@ -205,8 +205,8 @@ CA
                 </menuItem>
             </items>
         </menu>
-        <window title="Smart Drop" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="264" y="47" width="500" height="800"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
@@ -222,16 +222,8 @@ CA
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="ppn-2m-Apa" customClass="HeaderView">
                         <rect key="frame" x="0.0" y="760" width="500" height="40"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WH2-jZ-qwx">
-                                <rect key="frame" x="188" y="11" width="125" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Main Label For Lists" id="8Cy-lN-9B1">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b4a-F3-QgH">
-                                <rect key="frame" x="10" y="5" width="30" height="30"/>
+                                <rect key="frame" x="10" y="6" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="ahD-oP-VdT"/>
                                     <constraint firstAttribute="height" constant="30" id="bNH-gg-940"/>
@@ -258,14 +250,22 @@ CA
                                     <action selector="rightHeaderButtonPressed:" target="Voe-Tx-rLC" id="r41-5e-yU7"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WH2-jZ-qwx">
+                                <rect key="frame" x="162" y="10" width="176" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Main Label For Lists" id="8Cy-lN-9B1">
+                                    <font key="font" metaFont="systemSemibold" size="18"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="WH2-jZ-qwx" firstAttribute="centerX" secondItem="ppn-2m-Apa" secondAttribute="centerX" id="4kB-7G-Kbj"/>
                             <constraint firstAttribute="height" constant="40" id="7iT-Wf-oUv"/>
                             <constraint firstItem="i2m-CN-bcx" firstAttribute="centerY" secondItem="ppn-2m-Apa" secondAttribute="centerY" id="8vy-PF-fGk"/>
-                            <constraint firstItem="WH2-jZ-qwx" firstAttribute="centerY" secondItem="ppn-2m-Apa" secondAttribute="centerY" id="Art-fW-zzz"/>
+                            <constraint firstItem="WH2-jZ-qwx" firstAttribute="centerY" secondItem="ppn-2m-Apa" secondAttribute="centerY" constant="-1" id="Art-fW-zzz"/>
                             <constraint firstItem="b4a-F3-QgH" firstAttribute="leading" secondItem="ppn-2m-Apa" secondAttribute="leading" constant="10" id="GJw-QW-hLR"/>
-                            <constraint firstItem="b4a-F3-QgH" firstAttribute="centerY" secondItem="ppn-2m-Apa" secondAttribute="centerY" id="GiD-HG-XMn"/>
+                            <constraint firstItem="b4a-F3-QgH" firstAttribute="centerY" secondItem="ppn-2m-Apa" secondAttribute="centerY" constant="-1" id="GiD-HG-XMn"/>
                             <constraint firstAttribute="trailing" secondItem="i2m-CN-bcx" secondAttribute="trailing" constant="6" id="x6v-lV-I3l"/>
                         </constraints>
                     </customView>
@@ -280,7 +280,7 @@ CA
                     <constraint firstItem="ppn-2m-Apa" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="yID-yO-tPF"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="320.5" y="530"/>
+            <point key="canvasLocation" x="320" y="530"/>
         </window>
     </objects>
     <resources>

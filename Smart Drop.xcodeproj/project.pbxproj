@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3D4551231CEAB48A00C47EB4 /* Smart Drop.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D4551211CEAB48A00C47EB4 /* Smart Drop.xcdatamodeld */; };
+		3D4551261CEAB84400C47EB4 /* CustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4551251CEAB84400C47EB4 /* CustomScrollView.m */; };
+		3D45512A1CEABAF000C47EB4 /* CustomTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4551291CEABAF000C47EB4 /* CustomTableView.m */; };
 		3D6FDEFF1CCDDC06000D6A12 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6FDEFE1CCDDC06000D6A12 /* HeaderView.m */; };
 		3D81D7ED1CCDB0B8001AB135 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */; };
 		3D81D7F01CCDB0B8001AB135 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D7EF1CCDB0B8001AB135 /* main.m */; };
@@ -46,6 +48,10 @@
 
 /* Begin PBXFileReference section */
 		3D4551221CEAB48A00C47EB4 /* Smart Drop.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Smart Drop.xcdatamodel"; sourceTree = "<group>"; };
+		3D4551241CEAB84400C47EB4 /* CustomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomScrollView.h; sourceTree = "<group>"; };
+		3D4551251CEAB84400C47EB4 /* CustomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomScrollView.m; sourceTree = "<group>"; };
+		3D4551281CEABAF000C47EB4 /* CustomTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableView.h; sourceTree = "<group>"; };
+		3D4551291CEABAF000C47EB4 /* CustomTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableView.m; sourceTree = "<group>"; };
 		3D6FDEFD1CCDDC06000D6A12 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
 		3D6FDEFE1CCDDC06000D6A12 /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
 		3D81D7E81CCDB0B8001AB135 /* Smart Drop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smart Drop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +112,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D4551271CEAB84A00C47EB4 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				3DFA12EA1CCDCE0A00B8E25C /* CustomTableCellView.h */,
+				3DFA12EB1CCDCE0A00B8E25C /* CustomTableCellView.m */,
+				3D4551241CEAB84400C47EB4 /* CustomScrollView.h */,
+				3D4551251CEAB84400C47EB4 /* CustomScrollView.m */,
+				3D4551281CEABAF000C47EB4 /* CustomTableView.h */,
+				3D4551291CEABAF000C47EB4 /* CustomTableView.m */,
+			);
+			name = CustomViews;
+			sourceTree = "<group>";
+		};
 		3D81D7DF1CCDB0B8001AB135 = {
 			isa = PBXGroup;
 			children = (
@@ -134,13 +153,8 @@
 				3DF51E581CE043460036F635 /* Windows */,
 				3DCA58E81CCEF94B00DFE34E /* NSMutableArray+Management.h */,
 				3DCA58E91CCEF94B00DFE34E /* NSMutableArray+Management.m */,
-				3DFA12EA1CCDCE0A00B8E25C /* CustomTableCellView.h */,
-				3DFA12EB1CCDCE0A00B8E25C /* CustomTableCellView.m */,
-				3DCA58E21CCEEE3200DFE34E /* PageObject.h */,
-				3DCA58E31CCEEE3200DFE34E /* PageObject.m */,
-				3DFA12E71CCDBB8800B8E25C /* DataMaster.h */,
-				3DFA12E81CCDBB8800B8E25C /* DataMaster.m */,
-				3DCA58D51CCEBA9D00DFE34E /* DataObjects */,
+				3D4551271CEAB84A00C47EB4 /* CustomViews */,
+				3DCA58D51CCEBA9D00DFE34E /* DataManagement */,
 				3D81D7F41CCDB0B8001AB135 /* Assets.xcassets */,
 				3D81D7F61CCDB0B8001AB135 /* MainMenu.xib */,
 				3D6FDEFD1CCDDC06000D6A12 /* HeaderView.h */,
@@ -179,15 +193,19 @@
 			path = QuickListUITests;
 			sourceTree = "<group>";
 		};
-		3DCA58D51CCEBA9D00DFE34E /* DataObjects */ = {
+		3DCA58D51CCEBA9D00DFE34E /* DataManagement */ = {
 			isa = PBXGroup;
 			children = (
+				3DCA58E21CCEEE3200DFE34E /* PageObject.h */,
+				3DCA58E31CCEEE3200DFE34E /* PageObject.m */,
+				3DFA12E71CCDBB8800B8E25C /* DataMaster.h */,
+				3DFA12E81CCDBB8800B8E25C /* DataMaster.m */,
 				3DCA58DF1CCEC60900DFE34E /* FolderObject+CoreDataProperties.h */,
 				3DCA58E01CCEC60900DFE34E /* FolderObject+CoreDataProperties.m */,
 				3DCA58DB1CCEBB8D00DFE34E /* FolderObject.h */,
 				3DCA58DC1CCEBB8D00DFE34E /* FolderObject.m */,
 			);
-			name = DataObjects;
+			name = DataManagement;
 			sourceTree = "<group>";
 		};
 		3DF51E581CE043460036F635 /* Windows */ = {
@@ -345,7 +363,9 @@
 				3D81D7ED1CCDB0B8001AB135 /* AppDelegate.m in Sources */,
 				3DF51E561CE0433F0036F635 /* TextWindowController.m in Sources */,
 				3DCA58DE1CCEBB8D00DFE34E /* FolderObject.m in Sources */,
+				3D4551261CEAB84400C47EB4 /* CustomScrollView.m in Sources */,
 				3DFA12E91CCDBB8800B8E25C /* DataMaster.m in Sources */,
+				3D45512A1CEABAF000C47EB4 /* CustomTableView.m in Sources */,
 				3DFA12EC1CCDCE0A00B8E25C /* CustomTableCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
