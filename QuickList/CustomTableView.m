@@ -11,7 +11,6 @@
 @implementation CustomTableView
 
 - (void)drawRect:(NSRect)dirtyRect{
-    NSLog(@"%f",self.numberOfRows*self.rowHeight);
     CGRect drawingRect = CGRectMake(0, self.numberOfRows*40+dirtyRect.origin.y, dirtyRect.size.width, dirtyRect.size.height-self.numberOfRows*40);
     [super drawRect:dirtyRect];
     NSColor* startingColor = [NSColor colorWithRed:0.8088 green:0.6379 blue:1.0 alpha:1.0];

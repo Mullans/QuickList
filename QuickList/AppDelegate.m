@@ -250,6 +250,7 @@
         [[item dataForType:kUTIFolderType] getBytes:&draggedItem length:sizeof(draggedItem)];
         FolderObject* draggedFolder = currentTableContents[draggedItem];
         [draggedFolder setParentFolder:destination];
+        NSLog(@"%@ %@",draggedFolder.name,destination.name,target.name);
     }
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* currentPage = pages[depth];
