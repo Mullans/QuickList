@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  Smart Drop
+//  QuickList
 //
 //  Created by Sean Mullan on 4/24/16.
 //  Copyright © 2016 SilentLupin. All rights reserved.
@@ -730,9 +730,9 @@
 @synthesize managedObjectContext = _managedObjectContext;
 
 - (NSURL *)applicationDocumentsDirectory {
-    // The directory the application uses to store the Core Data store file. This code uses a directory named "Smart Drop" in the user's Application Support directory.
+    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.mullan.QuickList" in the user's Application Support directory.
     NSURL *appSupportURL = [[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-    return [appSupportURL URLByAppendingPathComponent:@"Smart Drop"];
+    return [appSupportURL URLByAppendingPathComponent:@"com.mullan.QuickList"];
 }
 
 - (NSManagedObjectModel *)managedObjectModel {
@@ -741,7 +741,7 @@
         return _managedObjectModel;
     }
 	
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Smart Drop" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"QuickList" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }

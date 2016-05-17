@@ -1,6 +1,6 @@
 //
 //  ImageWindowController.h
-//  Smart Drop
+//  QuickList
 //
 //  Created by Sean Mullan on 5/8/16.
 //  Copyright © 2016 SilentLupin. All rights reserved.

@@ -47,7 +47,7 @@
 /* Begin PBXFileReference section */
 		3D6FDEFD1CCDDC06000D6A12 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
 		3D6FDEFE1CCDDC06000D6A12 /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
-		3D81D7E81CCDB0B8001AB135 /* Smart Drop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smart Drop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D81D7E81CCDB0B8001AB135 /* QuickList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D81D7EB1CCDB0B8001AB135 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3D81D7EC1CCDB0B8001AB135 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3D81D7EF1CCDB0B8001AB135 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -55,10 +55,10 @@
 		3D81D7F41CCDB0B8001AB135 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D81D7F71CCDB0B8001AB135 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3D81D7F91CCDB0B8001AB135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D81D7FE1CCDB0B8001AB135 /* Smart DropTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smart DropTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D81D7FE1CCDB0B8001AB135 /* QuickListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D81D8021CCDB0B8001AB135 /* QuickListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickListTests.m; sourceTree = "<group>"; };
 		3D81D8041CCDB0B8001AB135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D81D8091CCDB0B8001AB135 /* Smart DropTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smart DropTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D81D8091CCDB0B8001AB135 /* QuickListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D81D80D1CCDB0B8001AB135 /* QuickListUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickListUITests.m; sourceTree = "<group>"; };
 		3D81D80F1CCDB0B8001AB135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DCA58DB1CCEBB8D00DFE34E /* FolderObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderObject.h; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		3D81D7DF1CCDB0B8001AB135 = {
 			isa = PBXGroup;
 			children = (
-				3D81D7EA1CCDB0B8001AB135 /* Smart Drop */,
+				3D81D7EA1CCDB0B8001AB135 /* QuickList */,
 				3D81D8011CCDB0B8001AB135 /* QuickListTests */,
 				3D81D80C1CCDB0B8001AB135 /* QuickListUITests */,
 				3D81D7E91CCDB0B8001AB135 /* Products */,
@@ -119,14 +119,14 @@
 		3D81D7E91CCDB0B8001AB135 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3D81D7E81CCDB0B8001AB135 /* Smart Drop.app */,
-				3D81D7FE1CCDB0B8001AB135 /* Smart DropTests.xctest */,
-				3D81D8091CCDB0B8001AB135 /* Smart DropTests.xctest */,
+				3D81D7E81CCDB0B8001AB135 /* QuickList.app */,
+				3D81D7FE1CCDB0B8001AB135 /* QuickListTests.xctest */,
+				3D81D8091CCDB0B8001AB135 /* QuickListUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3D81D7EA1CCDB0B8001AB135 /* Smart Drop */ = {
+		3D81D7EA1CCDB0B8001AB135 /* QuickList */ = {
 			isa = PBXGroup;
 			children = (
 				3D81D7EB1CCDB0B8001AB135 /* AppDelegate.h */,
@@ -149,7 +149,6 @@
 				3D81D7F11CCDB0B8001AB135 /* QuickList.xcdatamodeld */,
 				3D81D7EE1CCDB0B8001AB135 /* Supporting Files */,
 			);
-			name = "Smart Drop";
 			path = QuickList;
 			sourceTree = "<group>";
 		};
@@ -206,9 +205,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3D81D7E71CCDB0B8001AB135 /* Smart Drop */ = {
+		3D81D7E71CCDB0B8001AB135 /* QuickList */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3D81D8121CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "Smart Drop" */;
+			buildConfigurationList = 3D81D8121CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "QuickList" */;
 			buildPhases = (
 				3D81D7E41CCDB0B8001AB135 /* Sources */,
 				3D81D7E51CCDB0B8001AB135 /* Frameworks */,
@@ -218,14 +217,14 @@
 			);
 			dependencies = (
 			);
-			name = "Smart Drop";
+			name = QuickList;
 			productName = QuickList;
-			productReference = 3D81D7E81CCDB0B8001AB135 /* Smart Drop.app */;
+			productReference = 3D81D7E81CCDB0B8001AB135 /* QuickList.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3D81D7FD1CCDB0B8001AB135 /* Smart DropTests */ = {
+		3D81D7FD1CCDB0B8001AB135 /* QuickListTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3D81D8151CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "Smart DropTests" */;
+			buildConfigurationList = 3D81D8151CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "QuickListTests" */;
 			buildPhases = (
 				3D81D7FA1CCDB0B8001AB135 /* Sources */,
 				3D81D7FB1CCDB0B8001AB135 /* Frameworks */,
@@ -236,14 +235,14 @@
 			dependencies = (
 				3D81D8001CCDB0B8001AB135 /* PBXTargetDependency */,
 			);
-			name = "Smart DropTests";
+			name = QuickListTests;
 			productName = QuickListTests;
-			productReference = 3D81D7FE1CCDB0B8001AB135 /* Smart DropTests.xctest */;
+			productReference = 3D81D7FE1CCDB0B8001AB135 /* QuickListTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3D81D8081CCDB0B8001AB135 /* Smart DropUITests */ = {
+		3D81D8081CCDB0B8001AB135 /* QuickListUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3D81D8181CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "Smart DropUITests" */;
+			buildConfigurationList = 3D81D8181CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "QuickListUITests" */;
 			buildPhases = (
 				3D81D8051CCDB0B8001AB135 /* Sources */,
 				3D81D8061CCDB0B8001AB135 /* Frameworks */,
@@ -254,9 +253,9 @@
 			dependencies = (
 				3D81D80B1CCDB0B8001AB135 /* PBXTargetDependency */,
 			);
-			name = "Smart DropUITests";
+			name = QuickListUITests;
 			productName = QuickListUITests;
-			productReference = 3D81D8091CCDB0B8001AB135 /* Smart DropTests.xctest */;
+			productReference = 3D81D8091CCDB0B8001AB135 /* QuickListUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -282,7 +281,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3D81D7E31CCDB0B8001AB135 /* Build configuration list for PBXProject "Smart Drop" */;
+			buildConfigurationList = 3D81D7E31CCDB0B8001AB135 /* Build configuration list for PBXProject "QuickList" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -295,9 +294,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3D81D7E71CCDB0B8001AB135 /* Smart Drop */,
-				3D81D7FD1CCDB0B8001AB135 /* Smart DropTests */,
-				3D81D8081CCDB0B8001AB135 /* Smart DropUITests */,
+				3D81D7E71CCDB0B8001AB135 /* QuickList */,
+				3D81D7FD1CCDB0B8001AB135 /* QuickListTests */,
+				3D81D8081CCDB0B8001AB135 /* QuickListUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -371,12 +370,12 @@
 /* Begin PBXTargetDependency section */
 		3D81D8001CCDB0B8001AB135 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3D81D7E71CCDB0B8001AB135 /* Smart Drop */;
+			target = 3D81D7E71CCDB0B8001AB135 /* QuickList */;
 			targetProxy = 3D81D7FF1CCDB0B8001AB135 /* PBXContainerItemProxy */;
 		};
 		3D81D80B1CCDB0B8001AB135 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3D81D7E71CCDB0B8001AB135 /* Smart Drop */;
+			target = 3D81D7E71CCDB0B8001AB135 /* QuickList */;
 			targetProxy = 3D81D80A1CCDB0B8001AB135 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -483,8 +482,8 @@
 				INFOPLIST_FILE = QuickList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_BUNDLE_IDENTIFIER = SmartDrop;
-				PRODUCT_NAME = "Smart Drop";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickList;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -497,8 +496,8 @@
 				INFOPLIST_FILE = QuickList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_BUNDLE_IDENTIFIER = SmartDrop;
-				PRODUCT_NAME = "Smart Drop";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickList;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -510,8 +509,8 @@
 				INFOPLIST_FILE = QuickListTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickListTests;
-				PRODUCT_NAME = "Smart DropTests";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart Drop.app/Contents/MacOS/Smart Drop";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickList.app/Contents/MacOS/QuickList";
 			};
 			name = Debug;
 		};
@@ -523,8 +522,8 @@
 				INFOPLIST_FILE = QuickListTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickListTests;
-				PRODUCT_NAME = "Smart DropTests";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart Drop.app/Contents/MacOS/Smart Drop";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickList.app/Contents/MacOS/QuickList";
 			};
 			name = Release;
 		};
@@ -535,7 +534,7 @@
 				INFOPLIST_FILE = QuickListUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickListUITests;
-				PRODUCT_NAME = "Smart DropTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = QuickList;
 			};
 			name = Debug;
@@ -547,7 +546,7 @@
 				INFOPLIST_FILE = QuickListUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickListUITests;
-				PRODUCT_NAME = "Smart DropTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = QuickList;
 			};
 			name = Release;
@@ -555,7 +554,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3D81D7E31CCDB0B8001AB135 /* Build configuration list for PBXProject "Smart Drop" */ = {
+		3D81D7E31CCDB0B8001AB135 /* Build configuration list for PBXProject "QuickList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3D81D8101CCDB0B8001AB135 /* Debug */,
@@ -564,7 +563,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3D81D8121CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "Smart Drop" */ = {
+		3D81D8121CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "QuickList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3D81D8131CCDB0B8001AB135 /* Debug */,
@@ -573,7 +572,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3D81D8151CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "Smart DropTests" */ = {
+		3D81D8151CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "QuickListTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3D81D8161CCDB0B8001AB135 /* Debug */,
@@ -582,7 +581,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3D81D8181CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "Smart DropUITests" */ = {
+		3D81D8181CCDB0B8001AB135 /* Build configuration list for PBXNativeTarget "QuickListUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3D81D8191CCDB0B8001AB135 /* Debug */,
