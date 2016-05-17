@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
+    <entity name="FolderObject" representedClassName="FolderObject" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="dateAdded" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateChanged" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="importance" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="parentFolder" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="FolderObject" syncable="YES"/>
+        <relationship name="subfolders" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="FolderObject" inverseName="parentFolder" inverseEntity="FolderObject" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="FolderObject" positionX="-54" positionY="-9" width="128" height="165"/>
+    </elements>
+</model>

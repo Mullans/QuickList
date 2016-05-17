@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3D81D7E71CCDB0B8001AB135"
-               BuildableName = "QuickList.app"
-               BlueprintName = "QuickList"
-               ReferencedContainer = "container:QuickList.xcodeproj">
+               BuildableName = "Smart Drop.app"
+               BlueprintName = "Smart Drop"
+               ReferencedContainer = "container:Smart Drop.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3D81D7FD1CCDB0B8001AB135"
-               BuildableName = "QuickListTests.xctest"
-               BlueprintName = "QuickListTests"
-               ReferencedContainer = "container:QuickList.xcodeproj">
+               BuildableName = "Smart Drop.xctest"
+               BlueprintName = "Smart DropTests"
+               ReferencedContainer = "container:Smart Drop.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3D81D8081CCDB0B8001AB135"
-               BuildableName = "QuickListUITests.xctest"
-               BlueprintName = "QuickListUITests"
-               ReferencedContainer = "container:QuickList.xcodeproj">
+               BuildableName = "Smart Drop.xctest"
+               BlueprintName = "Smart DropUITests"
+               ReferencedContainer = "container:Smart Drop.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3D81D7E71CCDB0B8001AB135"
-            BuildableName = "QuickList.app"
-            BlueprintName = "QuickList"
-            ReferencedContainer = "container:QuickList.xcodeproj">
+            BuildableName = "Smart Drop.app"
+            BlueprintName = "Smart Drop"
+            ReferencedContainer = "container:Smart Drop.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3D81D7E71CCDB0B8001AB135"
-            BuildableName = "QuickList.app"
-            BlueprintName = "QuickList"
-            ReferencedContainer = "container:QuickList.xcodeproj">
+            BuildableName = "Smart Drop.app"
+            BlueprintName = "Smart Drop"
+            ReferencedContainer = "container:Smart Drop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3D81D7E71CCDB0B8001AB135"
-            BuildableName = "QuickList.app"
-            BlueprintName = "QuickList"
-            ReferencedContainer = "container:QuickList.xcodeproj">
+            BuildableName = "Smart Drop.app"
+            BlueprintName = "Smart Drop"
+            ReferencedContainer = "container:Smart Drop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

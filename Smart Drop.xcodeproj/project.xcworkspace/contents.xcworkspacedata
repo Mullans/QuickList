@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:QuickList.xcodeproj">
+      location = "self:/Users/Mullan/Desktop/QuickList/Smart Drop.xcodeproj">
    </FileRef>
 </Workspace>
