@@ -153,23 +153,41 @@
         return nil;
     }
 }
+
 -(BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation{
+    //set up values needed
     NSPasteboard* pasteboard = [info draggingPasteboard];
-//    NSLog(@"%ld -- %lu",(long)row,(unsigned long)dropOperation);
-    if(dropOperation==NSTableViewDropOn){
+    FolderObject* target;
+    FolderObject* destination = dataMaster.currentFolder;
+    bool targetingFolder = false;
+    if(row==currentTableContents.count){
+        target = dataMaster.currentFolder;
+    }else{
+        target = currentTableContents[row];
+        targetingFolder = (target.type==FODefault)||(target.type==FORoot);
+    }
+    NSArray* newItems = [pasteboard readObjectsForClasses:@[[NSImage class],[NSString class],[NSURL class],[NSAttributedString class]] options:nil];
+    NSArray* movingItems;
+    if(newItems.count==0){
+        movingItems = [pasteboard pasteboardItems];
+    }
+    //create a new folder if grouping items together
+    if(!targetingFolder&&dropOperation==NSTableViewDropOn){
         NSString* folderName = [self getFolderName];
         if(folderName==nil){
-            return false;
+            return NO;
         }
-        FolderObject* groupFolder = [dataMaster newFolderNamed:folderName inFolder:nil];
-        [groupFolder setParentFolder:dataMaster.currentFolder.parentFolder];
-        [dataMaster.currentFolder setParentFolder:groupFolder];
-        [self nextPageWithIndex:row];
+        FolderObject* groupFolder = [dataMaster newFolderNamed:folderName inFolder:dataMaster.currentFolder];
+        [target setParentFolder:groupFolder];
+        destination = groupFolder;
     }
-    NSArray* items = [pasteboard readObjectsForClasses:@[[NSImage class],[NSString class],[NSURL class],[NSAttributedString class]] options:nil];
-    for(id object in items){
-//        NSLog(@"%@ %@",object,[object class]);
-        FolderObject* newFolder = [dataMaster newFolderNamed:@"draggedItem" inFolder:nil];
+    if(targetingFolder){
+        destination = target;
+    }
+    
+    //handle dropping in outside items
+    for(id object in newItems){
+        FolderObject* newFolder = [dataMaster newFolderNamed:@"Untitled Folder" inFolder:destination];
         if([object isKindOfClass:[NSImage class]]){
             newFolder.type = FOImage;
             NSImage* newImage = (NSImage*)object;
@@ -182,9 +200,9 @@
         }else if([object isKindOfClass:[NSString class]]||[object isKindOfClass:[NSAttributedString class]]){
             NSString* itemString;
             if([object isKindOfClass:[NSAttributedString class]]){
-                itemString = [object string];
+                itemString = [object stringForType:NSPasteboardTypeString];
             }else{
-                itemString = object;
+                itemString = (NSString*)object;
             }
             if ([itemString hasPrefix:@"http://"] || [itemString hasPrefix:@"https://"])
             {
@@ -203,10 +221,10 @@
                 if(newFolder.name==nil){
                     newFolder.name = @"Untitled URL";
                 }
-
+                
                 newFolder.data = [itemString dataUsingEncoding:NSUTF16StringEncoding];
-                NSLog(@"%@",newFolder.name);
-                NSLog(@"  ");
+//                NSLog(@"%@",newFolder.name);
+//                NSLog(@"  ");
             }else{
                 newFolder.type = FOTextFile;
                 newFolder.name = [itemString substringToIndex:MIN(itemString.length,11)];
@@ -221,16 +239,39 @@
             [NSException raise:@"Invalid Dragged Object" format:@"Type %@ is invalid", [object class]];
         }
         newFolder.name = [[newFolder.name componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
-//        NSLog(@"Name:%@",newFolder.name);
-        currentTableContents = dataMaster.currentFolderContents;
     }
-    //TODO: change this so it only reloads the relevant lines
-    PageObject* tempView = ((PageObject*)pages[depth]);
-    [tempView reloadTable];
-    return true;
+    for(NSPasteboardItem* item in movingItems){
+//        NSLog(@"%@",item.types);
+        if(item.types.count==0){
+            continue;
+        }
+        NSInteger draggedItem;
+        [[item dataForType:kUTIFolderType] getBytes:&draggedItem length:sizeof(draggedItem)];
+        FolderObject* draggedFolder = currentTableContents[draggedItem];
+        [draggedFolder setParentFolder:destination];
+    }
+    currentTableContents = dataMaster.currentFolderContents;
+    PageObject* currentPage = pages[depth];
+    [currentPage reloadTable];
+    return YES;
 }
+
 -(NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation{
+    //Uncomment when implementing changing order of items in folders
+//    NSInteger numItems = [[[info draggingPasteboard] pasteboardItems] count];
+//    if(numItems>0){
+//        return YES;
+//    }
     return (row==currentTableContents.count&&dropOperation==NSTableViewDropAbove)||(dropOperation==NSTableViewDropOn);
+}
+//is this needed?
+-(BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard{
+    return YES;
+}
+-(id<NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row{
+    NSPasteboardItem* newItem = [[NSPasteboardItem alloc]init];
+    [newItem setData:[NSData dataWithBytes:&row length:sizeof(row)] forType:kUTIFolderType];
+    return newItem;
 }
 -(void)tableDoubleClicked:(id)sender{
     NSInteger row = [sender clickedRow];
@@ -265,6 +306,7 @@
     }
 
 }
+
 #pragma mark - Table Buttons
 -(void)clearSelection{
     [pages[depth] deselectAll];

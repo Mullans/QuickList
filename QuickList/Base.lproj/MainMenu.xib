@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -123,6 +123,28 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Edit" id="d9A-1O-dlb">
                         <items>
+                            <menuItem title="Cut" keyEquivalent="x" id="9kO-6T-e6T">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="r8u-pS-1aF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy" keyEquivalent="c" id="72e-e9-rry">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="s1g-IK-eb5"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" keyEquivalent="v" id="UlD-kx-PVn">
+                                <connections>
+                                    <action selector="pasteAsPlainText:" target="-1" id="N0q-ZK-jYT"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="NDw-gy-s0Y"/>
+                            <menuItem title="Select All" keyEquivalent="a" id="iqT-je-dah">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="Yee-bA-K1G"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="KWr-qd-Quc"/>
                             <menuItem title="Rename Selected" id="v8U-5N-9jv">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 DQ

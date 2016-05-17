@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+#import <Cocoa/Cocoa.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FolderObject : NSManagedObject

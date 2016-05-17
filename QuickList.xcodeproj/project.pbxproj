@@ -269,6 +269,7 @@
 				TargetAttributes = {
 					3D81D7E71CCDB0B8001AB135 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = GFC49YT5RF;
 					};
 					3D81D7FD1CCDB0B8001AB135 = {
 						CreatedOnToolsVersion = 7.3;
@@ -476,9 +477,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = QuickList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -488,9 +491,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = QuickList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

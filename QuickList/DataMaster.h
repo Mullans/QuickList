@@ -5,6 +5,7 @@
 //  Created by Sean Mullan on 4/24/16.
 //  Copyright © 2016 SilentLupin. All rights reserved.
 //
+#define kUTIFolderType @"com.mullan.QuickList.FolderType"
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
@@ -45,7 +46,6 @@ typedef NS_ENUM(NSInteger, FOFolderType) {
  */
 -(NSArray*)getTableAtIndex:(NSInteger)index;
 -(NSArray*)getDataForTable:(NSTableView*)table;
-
 NS_ASSUME_NONNULL_END
 
 /**
@@ -84,3 +84,4 @@ NS_ASSUME_NONNULL_END
 -(nonnull FolderObject*)openParentFolder;
 -(nonnull FolderObject*)newFolderNamed:(nonnull NSString*)name inFolder:(nullable FolderObject*)parentFolder;
 @end
+

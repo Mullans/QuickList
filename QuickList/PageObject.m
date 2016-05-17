@@ -21,7 +21,7 @@
     self = [super init];
     _scrollView = array[0];
     _tableView = array[1];
-    [_tableView registerForDraggedTypes:[NSArray arrayWithObjects:NSPasteboardTypeHTML,NSPasteboardTypePNG,NSPasteboardTypeString,NSURLPboardType, nil]];
+    [_tableView registerForDraggedTypes:[NSArray arrayWithObjects:NSPasteboardTypeHTML,NSPasteboardTypePNG,NSPasteboardTypeString,NSURLPboardType,kUTIFolderType, nil]];
     
     return self;
 }

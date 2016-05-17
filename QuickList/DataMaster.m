@@ -5,7 +5,6 @@
 //  Created by Sean Mullan on 4/24/16.
 //  Copyright © 2016 SilentLupin. All rights reserved.
 //
-
 #import "DataMaster.h"
 
 @implementation DataMaster
@@ -29,6 +28,7 @@
     if(delegate!=nil){
         tableView.delegate = delegate;
     }
+#pragma GCC diagnostic ignored "-Wundeclared-selector"
     [tableView setDoubleAction:@selector(tableDoubleClicked:)];
     return @[tableContainer,tableView];
 }
@@ -70,6 +70,9 @@
         return nil;
     }
 }
+#pragma mark - Pasteboard Methods
+
+
 #pragma mark - CoreData Methods
 -(instancetype)initWithContext:(NSManagedObjectContext*)managedContext{
     tables = [[NSMutableArray alloc]initWithCapacity:5];
