@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import <QuartzCore/QuartzCore.h>
 @interface CustomTableView : NSTableView
 
+@property (nonatomic) CAGradientLayer* gradientLayer;
 @end

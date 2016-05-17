@@ -363,9 +363,10 @@
         NSView* animatedView = backPage.scrollView;
         [backPage reloadTable];
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-            context.duration = 1;
+            context.duration = 0.5;
             [animatedView.animator setFrameOrigin:CGPointMake(_pagedView.frame.origin.x+_pagedView.frame.size.width, _pagedView.frame.origin.y)];
         }completionHandler:nil];
+        
         currentTableContents = [dataMaster currentFolderContents];
         depth--;
         //animate back
