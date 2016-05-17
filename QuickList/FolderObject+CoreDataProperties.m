@@ -1,6 +1,6 @@
 //
 //  FolderObject+CoreDataProperties.m
-//  QuickList
+//  Smart Drop
 //
 //  Created by Sean Mullan on 5/9/16.
 //  Copyright © 2016 SilentLupin. All rights reserved.

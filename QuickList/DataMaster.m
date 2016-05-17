@@ -1,6 +1,6 @@
 //
 //  DataMaster.m
-//  QuickList
+//  Smart Drop
 //
 //  Created by Sean Mullan on 4/24/16.
 //  Copyright © 2016 SilentLupin. All rights reserved.
@@ -96,7 +96,7 @@
         _currentFolder.dateAdded = [[NSDate date] timeIntervalSince1970];
         _currentFolder.dateChanged = [[NSDate date]timeIntervalSince1970];
         _currentFolder.importance = 0;
-        _currentFolder.name = @"RootFolder";
+        _currentFolder.name = @"Home Folder";
     }else if(fetchedObjects.count>1){
         NSLog(@"Error: Multiple RootFolders found");
         _currentFolder = (FolderObject*)[NSEntityDescription insertNewObjectForEntityForName:@"FolderObject" inManagedObjectContext:context];

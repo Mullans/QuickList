@@ -1,6 +1,6 @@
 //
 //  FolderObject.m
-//  QuickList
+//  Smart Drop
 //
 //  Created by Sean Mullan on 4/25/16.
 //  Copyright © 2016 SilentLupin. All rights reserved.
