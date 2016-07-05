@@ -17,6 +17,7 @@
 		3D81D7F81CCDB0B8001AB135 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D81D7F61CCDB0B8001AB135 /* MainMenu.xib */; };
 		3D81D8031CCDB0B8001AB135 /* QuickListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D8021CCDB0B8001AB135 /* QuickListTests.m */; };
 		3D81D80E1CCDB0B8001AB135 /* QuickListUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D81D80D1CCDB0B8001AB135 /* QuickListUITests.m */; };
+		3DB129301D29CA0B006655B4 /* NSView+points.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1292F1D29CA0B006655B4 /* NSView+points.m */; };
 		3DCA58DE1CCEBB8D00DFE34E /* FolderObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA58DC1CCEBB8D00DFE34E /* FolderObject.m */; };
 		3DCA58E11CCEC60900DFE34E /* FolderObject+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA58E01CCEC60900DFE34E /* FolderObject+CoreDataProperties.m */; };
 		3DCA58E41CCEEE3200DFE34E /* PageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA58E31CCEEE3200DFE34E /* PageObject.m */; };
@@ -67,6 +68,8 @@
 		3D81D8091CCDB0B8001AB135 /* Smart Drop.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smart Drop.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D81D80D1CCDB0B8001AB135 /* QuickListUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickListUITests.m; sourceTree = "<group>"; };
 		3D81D80F1CCDB0B8001AB135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DB1292E1D29CA0B006655B4 /* NSView+points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+points.h"; sourceTree = "<group>"; };
+		3DB1292F1D29CA0B006655B4 /* NSView+points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+points.m"; sourceTree = "<group>"; };
 		3DCA58DB1CCEBB8D00DFE34E /* FolderObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderObject.h; sourceTree = "<group>"; };
 		3DCA58DC1CCEBB8D00DFE34E /* FolderObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderObject.m; sourceTree = "<group>"; };
 		3DCA58DF1CCEC60900DFE34E /* FolderObject+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FolderObject+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -117,6 +120,8 @@
 			children = (
 				3DFA12EA1CCDCE0A00B8E25C /* CustomTableCellView.h */,
 				3DFA12EB1CCDCE0A00B8E25C /* CustomTableCellView.m */,
+				3DB1292E1D29CA0B006655B4 /* NSView+points.h */,
+				3DB1292F1D29CA0B006655B4 /* NSView+points.m */,
 				3D4551241CEAB84400C47EB4 /* CustomScrollView.h */,
 				3D4551251CEAB84400C47EB4 /* CustomScrollView.m */,
 				3D4551281CEABAF000C47EB4 /* CustomTableView.h */,
@@ -366,6 +371,7 @@
 				3D4551261CEAB84400C47EB4 /* CustomScrollView.m in Sources */,
 				3DFA12E91CCDBB8800B8E25C /* DataMaster.m in Sources */,
 				3D45512A1CEABAF000C47EB4 /* CustomTableView.m in Sources */,
+				3DB129301D29CA0B006655B4 /* NSView+points.m in Sources */,
 				3DFA12EC1CCDCE0A00B8E25C /* CustomTableCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,7 +508,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = QuickList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickList;
 				PRODUCT_NAME = "Smart Drop";
 			};
@@ -516,7 +522,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = QuickList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mullan.QuickList;
 				PRODUCT_NAME = "Smart Drop";
 			};

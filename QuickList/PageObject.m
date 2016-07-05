@@ -21,7 +21,9 @@
     self = [super init];
     _scrollView = array[0];
     _tableView = array[1];
+    [_tableView setBackgroundColor:[NSColor clearColor]];
     [_tableView registerForDraggedTypes:[NSArray arrayWithObjects:NSPasteboardTypeHTML,NSPasteboardTypePNG,NSPasteboardTypeString,NSURLPboardType,kUTIFolderType, nil]];
+    _tableView.backgroundType = 1;
     
     return self;
 }

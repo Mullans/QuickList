@@ -7,8 +7,8 @@
         <attribute name="importance" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="parentFolder" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="FolderObject" inverseName="subfolders" inverseEntity="FolderObject" syncable="YES"/>
-        <relationship name="subfolders" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="FolderObject" inverseName="parentFolder" inverseEntity="FolderObject" syncable="YES"/>
+        <relationship name="parentFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FolderObject" inverseName="subfolders" inverseEntity="FolderObject" syncable="YES"/>
+        <relationship name="subfolders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FolderObject" inverseName="parentFolder" inverseEntity="FolderObject" syncable="YES"/>
     </entity>
     <elements>
         <element name="FolderObject" positionX="-54" positionY="-9" width="128" height="165"/>

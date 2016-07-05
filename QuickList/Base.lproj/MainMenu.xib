@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
     <objects>
@@ -15,6 +14,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="headerLabel" destination="WH2-jZ-qwx" id="gWG-cC-dxP"/>
+                <outlet property="keepOnTopMenuItem" destination="quh-RX-eoY" id="jj5-qp-XPx"/>
                 <outlet property="pagedView" destination="6p7-gI-WSw" id="fV3-Iv-CHp"/>
                 <outlet property="rightHeaderButton" destination="i2m-CN-bcx" id="AQH-MD-Zr5"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
@@ -181,6 +181,12 @@ CA
                                     <action selector="performMiniaturize:" target="-1" id="VwT-WD-YPe"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Keep On Top" id="quh-RX-eoY" userLabel="Keep On Top">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="keepOnTopAction:" target="Voe-Tx-rLC" id="U69-zH-Gvd"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
                             <menuItem title="Bring All to Front" id="LE2-aR-0XJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -251,9 +257,9 @@ CA
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WH2-jZ-qwx">
-                                <rect key="frame" x="162" y="10" width="176" height="22"/>
+                                <rect key="frame" x="160" y="10" width="180" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Main Label For Lists" id="8Cy-lN-9B1">
-                                    <font key="font" metaFont="systemSemibold" size="18"/>
+                                    <font key="font" metaFont="systemBold" size="18"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>

@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "DataMaster.h"
+#import "CustomTableView.h"
 @interface PageObject : NSObject
 
 @property (nonatomic) NSScrollView* scrollView;
-@property (nonatomic) NSTableView* tableView;
+@property (nonatomic) CustomTableView* tableView;
 @property (nonatomic) FolderObject* folder;
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) NSString* identifier;

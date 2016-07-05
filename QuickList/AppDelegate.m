@@ -34,6 +34,7 @@
     // Insert code here to tear down your application
 }
 
+
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender{
     return true;
 }
@@ -48,9 +49,14 @@
         result = [[CustomTableCellView alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width, [self tableView:tableView heightOfRow:row])];
     }
     CGFloat numberOfRows = [[NSNumber numberWithInteger: tableView.numberOfRows] floatValue];
-    CGFloat colorFloat = (0.8)*1+(0.2)*(row/numberOfRows);
-    result.borderColor = [NSColor colorWithRed:0.7 green:1-colorFloat blue:colorFloat alpha:1];
-    NSTextField *cellTF = [[NSTextField alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width-30, result.bounds.size.height)];
+    [NSColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0];
+    [NSColor colorWithRed:0.9859 green:0.9284 blue:0.0 alpha:1.0];
+    
+    CGFloat colorFloat = (row/numberOfRows);
+    //TODO: Set color here
+    //[NSColor colorWithRed:0.5428 green:1.0 blue:0.5799 alpha:1.0];
+    result.cellColor = [NSColor colorWithRed:colorFloat green:1 blue:0 alpha:1];
+    NSTextField *cellTF = [[NSTextField alloc]initWithFrame:NSMakeRect(0, 0, tableColumn.width-35, result.bounds.size.height)];
     [cellTF setAutoresizingMask:NSViewWidthSizable];
     [result addSubview:cellTF];
     result.textField = cellTF;
@@ -70,7 +76,7 @@
                                               traits:NSBoldFontMask
                                               weight:0
                                                 size:20];
-    NSButton *newButton = [[NSButton alloc]initWithFrame:CGRectMake(result.frame.size.width-25, result.frame.size.height-30, 20, 20)];
+    NSButton *newButton = [[NSButton alloc]initWithFrame:CGRectMake(result.frame.size.width-35, result.frame.size.height-30, 20, 20)];
     switch (rowFolder.type) {
         case FOHTML:
             [newButton setImage:[NSImage imageNamed:@"html"]];
@@ -95,6 +101,7 @@
     [newButton setBezelStyle:NSShadowlessSquareBezelStyle];
     [newButton setButtonType:NSMomentaryPushInButton];
     if(rowFolder.type==FODefault){
+        result.isFolder = YES;
         [newButton setTarget:self];
         [newButton setAction:@selector(tableButtonPressed:)];
         [newButton setIdentifier:[[NSNumber numberWithInteger:row] stringValue]];
@@ -250,7 +257,7 @@
         [[item dataForType:kUTIFolderType] getBytes:&draggedItem length:sizeof(draggedItem)];
         FolderObject* draggedFolder = currentTableContents[draggedItem];
         [draggedFolder setParentFolder:destination];
-        NSLog(@"%@ %@",draggedFolder.name,destination.name,target.name);
+//        NSLog(@"%@ %@",draggedFolder.name,destination.name,target.name);
     }
     currentTableContents = dataMaster.currentFolderContents;
     PageObject* currentPage = pages[depth];
@@ -307,6 +314,16 @@
         [self nextPageWithIndex:row];
     }
 
+}
+
+- (IBAction)keepOnTopAction:(id)sender {
+    if(_keepOnTopMenuItem.state==NSOnState){
+        _keepOnTopMenuItem.state = NSOffState;
+        [_window setLevel:NSNormalWindowLevel];
+    }else{
+        _keepOnTopMenuItem.state = NSOnState;
+        [_window setLevel:NSStatusWindowLevel];
+    }
 }
 
 #pragma mark - Table Buttons

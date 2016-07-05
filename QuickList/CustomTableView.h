@@ -11,4 +11,9 @@
 @interface CustomTableView : NSTableView
 
 @property (nonatomic) CAGradientLayer* gradientLayer;
+@property (nonatomic) CALayer* solidLayer;
+@property (nonatomic) NSColor* backgroundColor;
+@property (nonatomic) NSColor* startingColor;
+@property (nonatomic) NSColor* endingColor;
+@property (nonatomic) int backgroundType;
 @end

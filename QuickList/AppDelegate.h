@@ -34,8 +34,10 @@
 @property (nonatomic) NSArray *tableArray;
 @property (weak) IBOutlet NSButton *rightHeaderButton;
 @property (weak) IBOutlet NSTextField *headerLabel;
+@property (weak) IBOutlet NSMenuItem *keepOnTopMenuItem;
 
 -(void)tableDoubleClicked:(id)sender;
+- (IBAction)keepOnTopAction:(id)sender;
 
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)rightHeaderButtonPressed:(id)sender;

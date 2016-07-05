@@ -10,6 +10,7 @@
 
 @interface CustomTableCellView : NSTableCellView
 
-@property (nonatomic) NSColor *borderColor;
+@property (nonatomic) NSColor *cellColor;
+@property BOOL isFolder;
 
 @end
